@@ -8,6 +8,15 @@ import java.io.Serializable;
  */
 public class Lancamento implements Serializable {
 
+    private Integer id = 0;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
     private String nome = "";
     private String data = "";
     private Double valor = 0D;

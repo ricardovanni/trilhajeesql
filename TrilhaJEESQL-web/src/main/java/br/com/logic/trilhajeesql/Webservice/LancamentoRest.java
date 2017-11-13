@@ -5,7 +5,6 @@
  */
 package br.com.logic.trilhajeesql.Webservice;
 
-import br.com.logic.trilhajeesql.EJB.Interface.AcessoBanco;
 import br.com.logic.trilhajeesql.Model.Lancamento;
 import javax.ejb.EJB;
 import javax.ws.rs.core.Context;
@@ -17,6 +16,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.core.MediaType;
+import br.com.logic.trilhajeesql.EJB.Interface.LancamentoLocal;
 
 /**
  * REST Web Service
@@ -31,7 +31,7 @@ public class LancamentoRest {
     private UriInfo context;
     
     @EJB
-    private AcessoBanco lancamento;
+    private LancamentoLocal lancamento;
     /**
      * Creates a new instance of LancamentoRest
      */
