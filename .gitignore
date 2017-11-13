@@ -1,3 +1,13 @@
-#Pasta Target
-/TrilhaJEESQL-ejb/target/**/*
-/TrilhaJEESQL-web/target/**/*
+$ cat .gitignore
+
+# Ignorar arquivos específicos
+.DS_Store
+
+# Use curingas como
+*~
+*.swp
+
+# Ignorar todos os diretórios e arquivos em um diretório.
+TrilhaJEESQL-ear/target/**/*
+TrilhaJEESQL-ejb/target/**/*
+TrilhaJEESQL-web/target/**/* 
