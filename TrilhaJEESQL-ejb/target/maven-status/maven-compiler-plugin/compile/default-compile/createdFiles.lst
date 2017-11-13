@@ -1,5 +1,0 @@
-br/com/logic/trilhajeesql/DAO/ConexaoDAO.class
-br/com/logic/trilhajeesql/Model/Lancamento.class
-br/com/logic/trilhajeesql/Model/TipoLancamentoEnum.class
-br/com/logic/trilhajeesql/EJB/Bean/AcessoBancoBean.class
-br/com/logic/trilhajeesql/EJB/Interface/AcessoBanco.class
