@@ -1,0 +1,15 @@
+Criar dentro da pasta: jboss-eap-6.0/modules/com/oracle/ojdbc5/main
+
+Arquivo module.xml com os dados:
+
+<module xmlns="urn:jboss:module:1.0" name="com.oracle.ojdbc5">
+  <resources>
+    <resource-root path="ojdbc5-11.2.0.1.0.jar"/>
+  </resources>
+  <dependencies>
+    <module name="javax.api"/>
+    <module name="javax.transaction.api"/>
+  </dependencies>
+</module>
+
+e colar o arquivo jar na mesma pasta.
