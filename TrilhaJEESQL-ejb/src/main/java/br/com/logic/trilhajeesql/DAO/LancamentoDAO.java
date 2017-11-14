@@ -18,16 +18,13 @@ import javax.ejb.Stateless;
 @LocalBean
 public class LancamentoDAO extends ConexaoDAO {
 
-    public void inserirDados(Lancamento dados) throws Exception {
+    public String inserirDados(Lancamento dados) throws Exception {
         Connection conn = null;
         PreparedStatement ps = null;
-        Statement stmt = null;
 
         try {
             //<editor-fold defaultstate="collapsed" desc="Conexao">
             conn = conecta();
-            stmt = conn.createStatement();
-            //</editor-fold>
 
             StringBuilder sql = new StringBuilder();
             sql.append("\n INSERT INTO lancamento(nome, data, valor, idtipolancamento)");
@@ -40,13 +37,13 @@ public class LancamentoDAO extends ConexaoDAO {
             ps.setInt(4, dados.getTipoLancamento());
 
             ps.execute();
-            stmt.execute("commit");
-            stmt.execute("shutdown");
+            
+            return "Dados Inseridos com sucesso!";
 
         } catch (Exception e) {
             throw e;
         } finally {
-            fechaConexao(conn, stmt, null);
+            fechaConexao(conn, null, null);
         }
     }
 

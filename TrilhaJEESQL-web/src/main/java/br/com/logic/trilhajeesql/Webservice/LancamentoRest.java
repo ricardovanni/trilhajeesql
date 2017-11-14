@@ -15,7 +15,7 @@ import javax.ws.rs.Path;
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.core.MediaType;
 import br.com.logic.trilhajeesql.EJB.Interface.LancamentoLocal;
-import java.util.List;
+import javax.ws.rs.POST;
 
 /**
  * REST Web Service
@@ -30,7 +30,7 @@ public class LancamentoRest {
     private UriInfo context;
 
     @EJB
-    private LancamentoLocal lancamento;
+    private LancamentoLocal lancamentoBean;
 
     /**
      * Creates a new instance of LancamentoRest
@@ -49,15 +49,21 @@ public class LancamentoRest {
     @Path("objeto")
     public Lancamento getJson() throws Exception {
         //TODO return proper representation object
-        return lancamento.retornaObjeto();
+        return lancamentoBean.retornaObjeto();
     }
 
-    @GET
+    @POST
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("select")
-    public List<Lancamento> getListJson() throws Exception {
+    @Path("insert")
+    public String insert() throws Exception {
         //TODO return proper representation object
-        return lancamento.consultarDados();
+        Lancamento lancamento = new Lancamento();
+        lancamento.setNome("Adriano");
+        lancamento.setData("10/10/2015");
+        lancamento.setValor(12.34);
+        lancamento.setTipoLancamento(1);
+        
+        return lancamentoBean.inserirLancamento(lancamento);
     }
 
 }

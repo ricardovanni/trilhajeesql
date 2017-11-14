@@ -26,9 +26,9 @@ public class LancamentoBean extends ConexaoDAO implements LancamentoLocal {
     }
 
     @Override
-    public void inserirLancamento(Lancamento lancamento) throws Exception {
+    public String inserirLancamento(Lancamento lancamento) throws Exception {
         try {
-            lancamentoDAO.inserirDados(lancamento);
+           return lancamentoDAO.inserirDados(lancamento);
 
         } catch (Exception e) {
             throw e;

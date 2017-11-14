@@ -13,6 +13,3 @@ Arquivo module.xml com os dados:
 </module>
 
 e colar o arquivo jar na mesma pasta.
-
-
-https://bgasparotto.com/pt/adicionar-datasource-ao-wildfly/

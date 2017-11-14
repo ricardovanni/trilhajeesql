@@ -11,7 +11,7 @@ import javax.ejb.Local;
 @Local
 public interface LancamentoLocal {
     
-    void inserirLancamento(Lancamento lancamento) throws Exception;
+    String inserirLancamento(Lancamento lancamento) throws Exception;
     
     List<Lancamento> consultarDados() throws Exception;
     
