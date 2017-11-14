@@ -16,3 +16,7 @@ e colar o arquivo jar na mesma pasta.
 
 
 https://bgasparotto.com/pt/adicionar-datasource-ao-wildfly/
+
+http://hsqldb.org/doc/guide/ch01.html#N10148
+
+java -cp /opt/drivers/hsqldb.jar org.hsqldb.Server -database.0 lancamento -dbname.0 lancamento

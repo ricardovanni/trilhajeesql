@@ -7,12 +7,19 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.Resource;
 
 /**
  * 
  * @author Ricardo Vanni
  */
 public class ConexaoDAO {
+    
+    
+    @Resource(lookup = "java:/jboss/resources/hsqldb")
+            
+    
+    
     Connection con = null;
     String driver = "org.hsqldb.jdbc.JDBCDriver";
    
