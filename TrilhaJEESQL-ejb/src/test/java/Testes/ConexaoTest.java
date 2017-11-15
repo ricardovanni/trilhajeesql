@@ -7,9 +7,7 @@ package Testes;
 
 import br.com.logic.trilhajeesql.DAO.ConexaoDAO;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.SQLException;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -23,6 +21,8 @@ import org.junit.Test;
  */
 public class ConexaoTest extends ConexaoDAO {
 
+    Connection conn = null;
+
     public ConexaoTest() {
     }
 
@@ -35,63 +35,51 @@ public class ConexaoTest extends ConexaoDAO {
     }
 
     @Before
-    public void setUp() {
-
+    public void setUp() throws SQLException {
+        conn = conectarHsqldb();
     }
 
     @After
     public void tearDown() {
     }
 
-//    @Test
+    @Test
     public void testConexaoDriver() throws Exception {
-        Connection conn = null;
-        PreparedStatement ps = null;
-        Statement stmt = null;
-        ResultSet rs = null;
         try {
-            conn = conecta();    
-            stmt = conn.createStatement();
-
             Assert.assertNotNull(conn);
 
-            StringBuilder sql = new StringBuilder();
-            
-            sql = new StringBuilder();
-            sql.append("\n SELECT * from lancamento");
-            
-            rs = stmt.executeQuery(sql.toString());
-            
-            while (rs.next()){
-                System.out.println(rs.getString("nome"));
-            }
-            
-            sql = new StringBuilder();            
-            sql.append("\n INSERT INTO lancamento(nome, data, valor, idtipolancamento) ");
-            sql.append("\n VALUES(?,?,?,?) ");
-            
-            ps = conn.prepareStatement(sql.toString());
-            ps.setString(1, "Joao");
-            ps.setString(2, "10/10/2017");
-            ps.setDouble(3, 12.65);
-            ps.setInt(4, 1);
-            ps.execute();
-            
-                       
-            sql = new StringBuilder();
-            sql.append("\n SELECT * from lancamento");
-            
-            rs = stmt.executeQuery(sql.toString());
-            
-            while (rs.next()){
-                System.out.println(rs.getString("nome"));
-            }
-            
-            fechaConexao(conn, stmt, rs);
-                       
-            
-            
-
+//            StringBuilder sql = new StringBuilder();
+//
+//            sql = new StringBuilder();
+//            sql.append("\n SELECT * from lancamento");
+//
+//            rs = stmt.executeQuery(sql.toString());
+//
+//            while (rs.next()){
+//                System.out.println(rs.getString("nome"));
+//            }
+//
+//            sql = new StringBuilder();
+//            sql.append("\n INSERT INTO lancamento(nome, data, valor, idtipolancamento) ");
+//            sql.append("\n VALUES(?,?,?,?) ");
+//
+//            ps = conn.prepareStatement(sql.toString());
+//            ps.setString(1, "Joao");
+//            ps.setString(2, "10/10/2017");
+//            ps.setDouble(3, 12.65);
+//            ps.setInt(4, 1);
+//            ps.execute();
+//
+//            sql = new StringBuilder();
+//            sql.append("\n SELECT * from lancamento");
+//
+//            rs = stmt.executeQuery(sql.toString());
+//
+//            while (rs.next()){
+//                System.out.println(rs.getString("nome"));
+//            }
+//
+//            fechaConexao(conn, stmt, rs);
         } catch (Exception e) {
             throw e;
         }

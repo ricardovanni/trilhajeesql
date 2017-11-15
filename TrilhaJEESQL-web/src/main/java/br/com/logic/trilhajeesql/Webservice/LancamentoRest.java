@@ -5,6 +5,7 @@
  */
 package br.com.logic.trilhajeesql.Webservice;
 
+import br.com.logic.trilhajeesql.DAO.ConexaoDAO;
 import br.com.logic.trilhajeesql.Model.Lancamento;
 import javax.ejb.EJB;
 import javax.ws.rs.core.Context;
@@ -15,6 +16,7 @@ import javax.ws.rs.Path;
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.core.MediaType;
 import br.com.logic.trilhajeesql.EJB.Interface.LancamentoLocal;
+import java.sql.Connection;
 import javax.ws.rs.POST;
 
 /**
@@ -52,18 +54,19 @@ public class LancamentoRest {
         return lancamentoBean.retornaObjeto();
     }
 
-    @POST
+    @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("insert")
     public String insert() throws Exception {
         //TODO return proper representation object
-        Lancamento lancamento = new Lancamento();
-        lancamento.setNome("Adriano");
-        lancamento.setData("10/10/2015");
-        lancamento.setValor(12.34);
-        lancamento.setTipoLancamento(1);
-        
-        return lancamentoBean.inserirLancamento(lancamento);
+        ConexaoDAO con = new ConexaoDAO();
+        Connection conn = con.conectarHsqldb();
+
+        if (conn == null) {
+            return "Conexao vazia";
+        } else {
+            return "Conectado";
+        }
     }
 
 }

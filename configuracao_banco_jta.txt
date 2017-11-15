@@ -20,3 +20,29 @@ https://bgasparotto.com/pt/adicionar-datasource-ao-wildfly/
 http://hsqldb.org/doc/guide/ch01.html#N10148
 
 java -cp /opt/drivers/hsqldb.jar org.hsqldb.Server -database.0 lancamento -dbname.0 lancamento
+
+** Copiar o jar para pasta do banco... e executar este comando: ****
+java -cp hsqldb-2.4.0.jar org.hsqldb.Server -database.0 lancamento -dbname.0 lancamento
+
+
+Configuração do datasource-class:  org.hsqldb.jdbc.pool.JDBCXADataSource
+
+  <datasource jta="true" jndi-name="java:jboss/datasources/hsqldb" pool-name="hsqldb" enabled="true" use-java-context="true" use-ccm="true">
+                  <!– endereço da nossa base de dados –>
+                  <connection-url>jdbc:hsqldb:hsql://localhost:9001/lancamento</connection-url>
+                  <driver>hsqldb</driver>
+                  <transaction-isolation>TRANSACTION_READ_COMMITTED</transaction-isolation>
+                  <pool>
+                    <min-pool-size>10</min-pool-size>
+                    <max-pool-size>100</max-pool-size>
+                    <prefill>true</prefill>
+                  </pool>
+                  <security>
+                    <user-name>sa</user-name>
+                    <password></password>
+                  </security>
+                  <statement>
+                    <prepared-statement-cache-size>32</prepared-statement-cache-size>
+                    <share-prepared-statements>true</share-prepared-statements>
+                  </statement>
+                </datasource>

@@ -24,7 +24,7 @@ public class LancamentoDAO extends ConexaoDAO {
 
         try {
             //<editor-fold defaultstate="collapsed" desc="Conexao">
-            conn = conecta();
+            conn = conectarHsqldb();
 
             StringBuilder sql = new StringBuilder();
             sql.append("\n INSERT INTO lancamento(nome, data, valor, idtipolancamento)");
@@ -37,13 +37,11 @@ public class LancamentoDAO extends ConexaoDAO {
             ps.setInt(4, dados.getTipoLancamento());
 
             ps.execute();
-            
+
             return "Dados Inseridos com sucesso!";
 
         } catch (Exception e) {
             throw e;
-        } finally {
-            fechaConexao(conn, null, null);
         }
     }
 
@@ -55,7 +53,7 @@ public class LancamentoDAO extends ConexaoDAO {
         List<Lancamento> ret = new ArrayList<>();
         try {
             //<editor-fold defaultstate="collapsed" desc="Conexao">
-            conn = conecta();
+            conn = conectarHsqldb();
             stmt = conn.createStatement();
             //</editor-fold>
 
@@ -89,7 +87,7 @@ public class LancamentoDAO extends ConexaoDAO {
         List<Lancamento> ret = new ArrayList<>();
         try {
             //<editor-fold defaultstate="collapsed" desc="Conexao">
-            conn = conecta();
+            conn = conectarHsqldb();
             stmt = conn.createStatement();
             //</editor-fold>
 
@@ -102,8 +100,6 @@ public class LancamentoDAO extends ConexaoDAO {
 
         } catch (Exception e) {
             throw e;
-        } finally {
-            fechaConexao(conn, stmt, null);
         }
     }
 
@@ -113,7 +109,7 @@ public class LancamentoDAO extends ConexaoDAO {
 
         try {
             //<editor-fold defaultstate="collapsed" desc="Conexao">
-            conn = conecta();
+            conn = conectarHsqldb();
             stmt = conn.createStatement();
             //</editor-fold>
 
@@ -130,8 +126,6 @@ public class LancamentoDAO extends ConexaoDAO {
 
         } catch (Exception e) {
             throw e;
-        } finally {
-            fechaConexao(conn, stmt, null);
         }
     }
 
