@@ -1,6 +1,5 @@
 package br.com.logic.trilhajeesql.EJB.Bean;
 
-import br.com.logic.trilhajeesql.DAO.ConexaoDAO;
 import br.com.logic.trilhajeesql.DAO.LancamentoDAO;
 import br.com.logic.trilhajeesql.Model.Lancamento;
 import javax.ejb.LocalBean;
@@ -15,7 +14,7 @@ import javax.inject.Inject;
  */
 @Stateless
 @LocalBean
-public class LancamentoBean extends ConexaoDAO implements LancamentoLocal {
+public class LancamentoBean implements LancamentoLocal {
 
     @Inject
     private LancamentoDAO lancamentoDAO;
@@ -28,7 +27,7 @@ public class LancamentoBean extends ConexaoDAO implements LancamentoLocal {
     @Override
     public String inserirLancamento(Lancamento lancamento) throws Exception {
         try {
-           return lancamentoDAO.inserirDados(lancamento);
+            return lancamentoDAO.inserirDados(lancamento);
 
         } catch (Exception e) {
             throw e;
@@ -63,5 +62,10 @@ public class LancamentoBean extends ConexaoDAO implements LancamentoLocal {
         } catch (Exception e) {
             throw e;
         }
+    }
+
+    @Override
+    public String getConexao() throws Exception {
+        return lancamentoDAO.getConexao();
     }
 }

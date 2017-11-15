@@ -5,7 +5,6 @@
  */
 package br.com.logic.trilhajeesql.Webservice;
 
-import br.com.logic.trilhajeesql.DAO.ConexaoDAO;
 import br.com.logic.trilhajeesql.Model.Lancamento;
 import javax.ejb.EJB;
 import javax.ws.rs.core.Context;
@@ -16,13 +15,11 @@ import javax.ws.rs.Path;
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.core.MediaType;
 import br.com.logic.trilhajeesql.EJB.Interface.LancamentoLocal;
-import java.sql.Connection;
-import javax.ws.rs.POST;
 
 /**
  * REST Web Service
  *
- * @author HomeBook
+ * @author Ricardo Vanni
  */
 @Path("lancamento")
 @RequestScoped
@@ -30,7 +27,6 @@ public class LancamentoRest {
 
     @Context
     private UriInfo context;
-
     @EJB
     private LancamentoLocal lancamentoBean;
 
@@ -56,17 +52,9 @@ public class LancamentoRest {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("insert")
-    public String insert() throws Exception {
-        //TODO return proper representation object
-        ConexaoDAO con = new ConexaoDAO();
-        Connection conn = con.conectarHsqldb();
-
-        if (conn == null) {
-            return "Conexao vazia";
-        } else {
-            return "Conectado";
-        }
+    @Path("getconexao")
+    public String getConexao() throws Exception {
+        return lancamentoBean.getConexao();
     }
 
 }

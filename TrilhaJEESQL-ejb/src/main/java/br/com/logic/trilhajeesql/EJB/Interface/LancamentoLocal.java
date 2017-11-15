@@ -10,14 +10,16 @@ import javax.ejb.Local;
  */
 @Local
 public interface LancamentoLocal {
-    
+
     String inserirLancamento(Lancamento lancamento) throws Exception;
-    
+
     List<Lancamento> consultarDados() throws Exception;
-    
+
     void deletarDados(Lancamento lancamento) throws Exception;
-    
+
     void alterarDados(Integer id, Lancamento dados) throws Exception;
-    
+
     Lancamento retornaObjeto() throws Exception;
+
+    String getConexao() throws Exception;
 }

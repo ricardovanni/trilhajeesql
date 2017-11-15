@@ -1,15 +1,18 @@
 package br.com.logic.trilhajeesql.DAO;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.SQLException;
 import javax.annotation.Resource;
+import javax.ejb.Stateless;
 import javax.sql.DataSource;
 
 /**
  *
  * @author Ricardo Vanni
  */
-public class ConexaoDAO {
+@Stateless
+public class ConexaoDAO implements Serializable {
 
     @Resource(lookup = "java:jboss/datasources/Hsqldb")
     private DataSource dataSource;

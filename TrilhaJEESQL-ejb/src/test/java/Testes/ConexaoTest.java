@@ -43,7 +43,7 @@ public class ConexaoTest extends ConexaoDAO {
     public void tearDown() {
     }
 
-    @Test
+//    @Test
     public void testConexaoDriver() throws Exception {
         try {
             Assert.assertNotNull(conn);

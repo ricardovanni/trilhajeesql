@@ -4,11 +4,15 @@ import br.com.logic.trilhajeesql.Model.Lancamento;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 
 /**
  *
@@ -16,7 +20,10 @@ import javax.ejb.Stateless;
  */
 @Stateless
 @LocalBean
-public class LancamentoDAO extends ConexaoDAO {
+public class LancamentoDAO {
+
+    @Inject
+    private ConexaoDAO connection;
 
     public String inserirDados(Lancamento dados) throws Exception {
         Connection conn = null;
@@ -24,7 +31,7 @@ public class LancamentoDAO extends ConexaoDAO {
 
         try {
             //<editor-fold defaultstate="collapsed" desc="Conexao">
-            conn = conectarHsqldb();
+            conn = connection.conectarHsqldb();
 
             StringBuilder sql = new StringBuilder();
             sql.append("\n INSERT INTO lancamento(nome, data, valor, idtipolancamento)");
@@ -53,7 +60,7 @@ public class LancamentoDAO extends ConexaoDAO {
         List<Lancamento> ret = new ArrayList<>();
         try {
             //<editor-fold defaultstate="collapsed" desc="Conexao">
-            conn = conectarHsqldb();
+            conn = connection.conectarHsqldb();
             stmt = conn.createStatement();
             //</editor-fold>
 
@@ -87,7 +94,7 @@ public class LancamentoDAO extends ConexaoDAO {
         List<Lancamento> ret = new ArrayList<>();
         try {
             //<editor-fold defaultstate="collapsed" desc="Conexao">
-            conn = conectarHsqldb();
+            conn = connection.conectarHsqldb();
             stmt = conn.createStatement();
             //</editor-fold>
 
@@ -109,7 +116,7 @@ public class LancamentoDAO extends ConexaoDAO {
 
         try {
             //<editor-fold defaultstate="collapsed" desc="Conexao">
-            conn = conectarHsqldb();
+            conn = connection.conectarHsqldb();
             stmt = conn.createStatement();
             //</editor-fold>
 
@@ -136,5 +143,22 @@ public class LancamentoDAO extends ConexaoDAO {
         ret.setValor(134.56);
         ret.setTipoLancamento(1);
         return ret;
+    }
+
+    public String getConexao() {
+        Connection con = null;
+        String conexao = "";
+        try {
+            con = connection.conectarHsqldb();
+
+            if (con == null) {
+                return "Sem conexao";
+            } else {
+                return "Conectado!";
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(LancamentoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return conexao;
     }
 }
