@@ -2,6 +2,7 @@ package Testes;
 
 import br.com.logic.trilhajeesql.DAO.ConexaoDAO;
 import java.sql.Connection;
+import java.sql.SQLException;
 import javax.inject.Inject;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -36,11 +37,11 @@ public class ConexaoTest {
         try {
             conn = conexao.conectarHsqldb();
 
-            boolean ver = conn == null ? false : true;
+            boolean ver = conn != null;
 
             Assert.assertTrue(ver);
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw e;
         }
     }

@@ -1,6 +1,7 @@
 package br.com.logic.trilhajeesql.DAO;
 
 import br.com.logic.trilhajeesql.Model.Lancamento;
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,17 +11,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.LocalBean;
-import javax.ejb.Stateless;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 
 /**
  *
  * @author Ricardo Vanni
  */
-@Stateless
-@LocalBean
-public class LancamentoDAO {
+@SessionScoped
+public class LancamentoDAO implements Serializable {
 
     @Inject
     private ConexaoDAO connection;
@@ -47,7 +46,7 @@ public class LancamentoDAO {
 
             return "Dados Inseridos com sucesso!";
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw e;
         }
     }

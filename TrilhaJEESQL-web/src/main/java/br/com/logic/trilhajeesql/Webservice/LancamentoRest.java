@@ -12,9 +12,10 @@ import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.core.MediaType;
 import br.com.logic.trilhajeesql.EJB.Interface.LancamentoLocal;
+import java.util.List;
+import javax.enterprise.context.RequestScoped;
 
 /**
  * REST Web Service
@@ -55,6 +56,13 @@ public class LancamentoRest {
     @Path("getconexao")
     public String getConexao() throws Exception {
         return lancamentoBean.getConexao();
+    }
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("consultar")
+    public List<Lancamento> consultarDados() throws Exception {
+        return lancamentoBean.consultarDados();
     }
 
 }

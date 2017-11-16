@@ -2,7 +2,6 @@ package br.com.logic.trilhajeesql.EJB.Bean;
 
 import br.com.logic.trilhajeesql.DAO.LancamentoDAO;
 import br.com.logic.trilhajeesql.Model.Lancamento;
-import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import br.com.logic.trilhajeesql.EJB.Interface.LancamentoLocal;
 import java.util.List;
