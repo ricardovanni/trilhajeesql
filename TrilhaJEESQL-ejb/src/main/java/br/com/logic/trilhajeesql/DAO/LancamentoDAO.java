@@ -3,7 +3,6 @@ package br.com.logic.trilhajeesql.DAO;
 import br.com.logic.trilhajeesql.Model.Lancamento;
 import java.io.Serializable;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -26,24 +25,22 @@ public class LancamentoDAO implements Serializable {
 
     public String inserirDados(Lancamento dados) throws Exception {
         Connection conn = null;
-        PreparedStatement ps = null;
+        Statement stmt = null;
 
         try {
             //<editor-fold defaultstate="collapsed" desc="Conexao">
             conn = connection.conectarHsqldb();
+            stmt = conn.createStatement();
             //</editor-fold>
 
             StringBuilder sql = new StringBuilder();
             sql.append("\n INSERT INTO lancamento(nome, data, valor, idtipolancamento)");
-            sql.append("\n VALUES (?, ?, ?, ?)");
+            sql.append("\n VALUES ('").append(dados.getNome()).append("', '")
+                    .append(dados.getData()).append("', ")
+                    .append(dados.getValor()).append(", ")
+                    .append(dados.getTipoLancamento()).append(")");
 
-            ps = conn.prepareStatement(sql.toString());
-            ps.setString(1, dados.getNome());
-            ps.setString(1, dados.getData());
-            ps.setDouble(3, dados.getValor());
-            ps.setInt(4, dados.getTipoLancamento());
-
-            ps.execute();
+            stmt.execute(sql.toString());
 
             return "Dados Inseridos com sucesso!";
 
