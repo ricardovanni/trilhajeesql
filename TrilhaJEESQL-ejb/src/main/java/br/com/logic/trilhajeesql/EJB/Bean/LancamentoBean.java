@@ -13,7 +13,6 @@ import javax.inject.Inject;
  * @author Ricardo Vanni
  */
 @Stateless
-@LocalBean
 public class LancamentoBean implements LancamentoLocal {
 
     @Inject
@@ -67,5 +66,10 @@ public class LancamentoBean implements LancamentoLocal {
     @Override
     public String getConexao() throws Exception {
         return lancamentoDAO.getConexao();
+    }
+
+    @Override
+    public String getDado() throws Exception {
+        return "retorno";
     }
 }

@@ -22,4 +22,6 @@ public interface LancamentoLocal {
     Lancamento retornaObjeto() throws Exception;
 
     String getConexao() throws Exception;
+
+    String getDado() throws Exception;
 }
