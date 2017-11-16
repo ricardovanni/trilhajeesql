@@ -18,3 +18,72 @@ e colar o arquivo jar na mesma pasta.
 https://bgasparotto.com/pt/adicionar-datasource-ao-wildfly/
 
 http://hsqldb.org/doc/guide/ch01.html#N10148
+
+java -cp /opt/drivers/hsqldb.jar org.hsqldb.Server -database.0 lancamento -dbname.0 lancamento
+
+** Copiar o jar para pasta do banco... e executar este comando: ****
+java -cp hsqldb-2.4.0.jar org.hsqldb.Server -database.0 lancamento -dbname.0 lancamento
+
+
+Configuração do datasource-class:  org.hsqldb.jdbc.pool.JDBCXADataSource
+
+  <datasource jta="true" jndi-name="java:jboss/datasources/hsqldb" pool-name="hsqldb" enabled="true" use-java-context="true" use-ccm="true">
+                  <!– endereço da nossa base de dados –>
+                  <connection-url>jdbc:hsqldb:hsql://localhost:9001/lancamento</connection-url>
+                  <driver>hsqldb</driver>
+                  <transaction-isolation>TRANSACTION_READ_COMMITTED</transaction-isolation>
+                  <pool>
+                    <min-pool-size>10</min-pool-size>
+                    <max-pool-size>100</max-pool-size>
+                    <prefill>true</prefill>
+                  </pool>
+                  <security>
+                    <user-name>sa</user-name>
+                    <password></password>
+                  </security>
+                  <statement>
+                    <prepared-statement-cache-size>32</prepared-statement-cache-size>
+                    <share-prepared-statements>true</share-prepared-statements>
+                  </statement>
+                </datasource>
+
+
+Configuração do arquillian
+ @Deployment
+    public static EnterpriseArchive createTestArchive() throws Exception {
+        try {
+            //EnterpriseArchive ear = ShrinkWrap.create(ZipImporter.class, "san-sistema-test.ear").importFrom(new ZipFile("../san-ear/target/san-sistema.ear")).as(EnterpriseArchive.class);
+            EnterpriseArchive ear = ShrinkWrap.create(EnterpriseArchive.class, "san-sistema-test" + System.currentTimeMillis() + ".ear");
+
+            ear.addAsModule(new File("../arrecadacao-ejb/target/arrecadacao-ejb.jar"), "arrecadacao-ejb" + System.currentTimeMillis() + ".jar");
+            ear.addAsModule(new File("../cadastro-ejb/target/cadastro-ejb.jar"), "cadastro-ejb" + System.currentTimeMillis() + ".jar");
+            ear.addAsModule(new File("../callcenter-ejb/target/callcenter-ejb.jar"), "callcenter-ejb" + System.currentTimeMillis() + ".jar");
+            ear.addAsModule(new File("../cobranca-ejb/target/cobranca-ejb.jar"), "cobranca-ejb" + System.currentTimeMillis() + ".jar");
+            ear.addAsModule(new File("../comum-ejb/target/comum-ejb.jar"), "comum-ejb" + System.currentTimeMillis() + ".jar");
+            ear.addAsModule(new File("../configurador-ejb/target/configurador-ejb.jar"), "configurador-ejb" + System.currentTimeMillis() + ".jar");
+            ear.addAsModule(new File("../consulta-ejb/target/consulta-ejb.jar"), "consulta-ejb" + System.currentTimeMillis() + ".jar");
+            ear.addAsModule(new File("../controleservico-ejb/target/controleservico-ejb.jar"), "controleservico-ejb" + System.currentTimeMillis() + ".jar");
+            ear.addAsModule(new File("../cronograma-ejb/target/cronograma-ejb.jar"), "cronograma-ejb" + System.currentTimeMillis() + ".jar");
+            ear.addAsModule(new File("../faturamentomedicao-ejb/target/faturamentomedicao-ejb.jar"), "faturamentomedicao-ejb" + System.currentTimeMillis() + ".jar");
+            ear.addAsModule(new File("../importador-ejb/target/importador-ejb.jar"), "importador-ejb" + System.currentTimeMillis() + ".jar");
+            ear.addAsModule(new File("../leitura-ejb/target/leitura-ejb.jar"), "leitura-ejb" + System.currentTimeMillis() + ".jar");
+            ear.addAsModule(new File("../macro-ejb/target/macro-ejb.jar"), "macro-ejb" + System.currentTimeMillis() + ".jar");
+            ear.addAsModule(new File("../rubrica-ejb/target/rubrica-ejb.jar"), "rubrica-ejb" + System.currentTimeMillis() + ".jar");
+            ear.addAsModule(new File("../scheduler-ejb/target/scheduler-ejb.jar"), "scheduler-ejb" + System.currentTimeMillis() + ".jar");
+            ear.addAsModule(new File("../seguranca-ejb/target/seguranca-ejb.jar"), "seguranca-ejb" + System.currentTimeMillis() + ".jar");
+            ear.addAsModule(new File("../serasa-ejb/target/serasa-ejb.jar"), "serasa-ejb" + System.currentTimeMillis() + ".jar");
+            ear.addAsModule(new File("../portalservicos-ejb/target/portalservicos-ejb.jar"), "portalservicos-ejb" + System.currentTimeMillis() + ".jar");
+            ear.addAsModule(new File("../sms-ejb/target/sms-ejb.jar"), "sms-ejb" + System.currentTimeMillis() + ".jar");
+
+            JavaArchive jarTest = ShrinkWrap.create(JavaArchive.class, "san-sistema-test.jar").addPackages(true, "logic.nsgc.test");
+            jarTest.merge(ShrinkWrap.create(GenericArchive.class).as(ExplodedImporter.class).importDirectory("src/test/resources").as(GenericArchive.class), "/", Filters.includeAll());
+
+            ear.addAsLibrary(jarTest);
+            ear.addAsLibraries(MavenArtifactResolver.resolve("com.oracle:ojdbc5:11.2.0.1.0"));
+            ear.addAsLibraries(MavenArtifactResolver.resolve("org.mockito:mockito-all:1.8.3"));
+
+            return ear;
+
+        } catch (Exception e) {
+            LOGGER.log(Level.WARNING, e.getMessage(), e);
+        }
