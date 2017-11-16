@@ -31,6 +31,7 @@ public class LancamentoDAO implements Serializable {
         try {
             //<editor-fold defaultstate="collapsed" desc="Conexao">
             conn = connection.conectarHsqldb();
+            //</editor-fold>
 
             StringBuilder sql = new StringBuilder();
             sql.append("\n INSERT INTO lancamento(nome, data, valor, idtipolancamento)");

@@ -14,7 +14,7 @@ import javax.sql.DataSource;
 @SessionScoped
 public class ConexaoDAO implements Serializable {
 
-    @Resource(lookup = "java:jboss/datasources/HsqlDB")
+    @Resource(lookup = "java:jboss/datasources/Hsqldb")
     private DataSource dataSource;
 
     public Connection conectarHsqldb() throws SQLException {
