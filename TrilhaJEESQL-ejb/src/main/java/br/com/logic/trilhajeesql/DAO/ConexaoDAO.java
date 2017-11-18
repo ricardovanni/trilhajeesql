@@ -17,6 +17,8 @@ public class ConexaoDAO implements Serializable {
     @Resource(lookup = "java:jboss/datasources/Hsqldb")
     private DataSource dataSource;
 
+    private Connection conn = null;
+
     public Connection conectarHsqldb() throws SQLException {
         if (dataSource == null) {
             throw new SQLException("DataSource inexistente");
@@ -25,6 +27,11 @@ public class ConexaoDAO implements Serializable {
         if (connection == null) {
             throw new SQLException("Não há conexão com o banco");
         }
+        conn = connection;
         return connection;
+    }
+
+    public Connection getConnection() {
+        return conn;
     }
 }

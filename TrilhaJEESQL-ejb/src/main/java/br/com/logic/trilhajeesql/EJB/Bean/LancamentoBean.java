@@ -4,6 +4,7 @@ import br.com.logic.trilhajeesql.DAO.LancamentoDAO;
 import br.com.logic.trilhajeesql.Model.Lancamento;
 import javax.ejb.Stateless;
 import br.com.logic.trilhajeesql.EJB.Interface.LancamentoLocal;
+import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 
@@ -35,8 +36,13 @@ public class LancamentoBean implements LancamentoLocal {
     @Override
     public List<Lancamento> consultarDados() throws Exception {
         try {
-            return lancamentoDAO.consultarDados();
+            List<Lancamento> ret = lancamentoDAO.consultarDados();
 
+            if (ret.isEmpty()) {
+                throw new Exception("Nao existem dados de lancamentos registrados.");
+            } else {
+                return ret;
+            }
         } catch (Exception e) {
             throw e;
         }

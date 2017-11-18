@@ -57,7 +57,7 @@ public class LancamentoRest {
     public String getConexao() throws Exception {
         return lancamentoBean.getConexao();
     }
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("consultar")

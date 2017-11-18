@@ -41,6 +41,7 @@ public class LancamentoDAO implements Serializable {
                     .append(dados.getTipoLancamento()).append(")");
 
             stmt.execute(sql.toString());
+            stmt.execute("commit");
 
             return "Dados Inseridos com sucesso!";
 
@@ -77,9 +78,8 @@ public class LancamentoDAO implements Serializable {
 
                 ret.add(lcto);
             }
-
             return ret;
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw e;
         }
     }
@@ -100,9 +100,9 @@ public class LancamentoDAO implements Serializable {
             sql.append("\n WHERE  id = ").append(lancamento.getId());
 
             stmt.execute(sql.toString());
-            stmt.execute("shutdown");
+            stmt.execute("commit");
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw e;
         }
     }
@@ -126,9 +126,9 @@ public class LancamentoDAO implements Serializable {
             sql.append("\n WHERE id = ").append(id);
 
             stmt.execute(sql.toString());
-            stmt.execute("shutdown");
+            stmt.execute("commit");
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw e;
         }
     }
