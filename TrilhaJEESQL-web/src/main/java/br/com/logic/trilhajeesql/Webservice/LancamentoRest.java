@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.com.logic.trilhajeesql.Webservice;
 
 import br.com.logic.trilhajeesql.Model.Lancamento;
@@ -16,6 +11,7 @@ import javax.ws.rs.core.MediaType;
 import br.com.logic.trilhajeesql.EJB.Interface.LancamentoLocal;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
+import javax.ws.rs.QueryParam;
 
 /**
  * REST Web Service
@@ -32,37 +28,32 @@ public class LancamentoRest {
     private LancamentoLocal lancamentoBean;
 
     /**
-     * Creates a new instance of LancamentoRest
-     */
-    public LancamentoRest() {
-    }
-
-    /**
-     * Retrieves representation of an instance of
-     * br.com.logic.trilhajeesql.Webservice.LancamentoRest
+     * Este Metodo retorna a consulta de todos os lancamentos cadastrados na
+     * base de dados
      *
-     * @return an instance of java.lang.String
+     * @return Retorna uma lista de lancamentos
+     * @throws Exception
      */
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("objeto")
-    public Lancamento getJson() throws Exception {
-        //TODO return proper representation object
-        return lancamentoBean.retornaObjeto();
-    }
-
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("getconexao")
-    public String getConexao() throws Exception {
-        return lancamentoBean.getConexao();
-    }
-
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("consultar")
     public List<Lancamento> consultarDados() throws Exception {
-        return lancamentoBean.consultarDados();
+        return lancamentoBean.consultarLancamento();
+    }
+
+    /**
+     * Este metodo retorna a consulta de todos os lancamentos com filtro para a
+     * data informada no parametro.
+     *
+     * @param data Parametro que define a data do lancamento
+     * @return Retorna uma lista de lancamentos filtrados por data
+     * @throws Exception
+     */
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("consultarPorData")
+    public List<Lancamento> consultarLancamentosPorData(@QueryParam("data") String data) throws Exception {
+        return lancamentoBean.consultarLancamentoPorData(data);
     }
 
 }

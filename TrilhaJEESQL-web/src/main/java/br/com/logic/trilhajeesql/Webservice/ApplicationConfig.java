@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.com.logic.trilhajeesql.Webservice;
 
 import java.util.Set;
@@ -10,7 +5,7 @@ import javax.ws.rs.core.Application;
 
 /**
  *
- * @author HomeBook
+ * @author Ricardo Vanni
  */
 @javax.ws.rs.ApplicationPath("")
 public class ApplicationConfig extends Application {
@@ -23,13 +18,12 @@ public class ApplicationConfig extends Application {
     }
 
     /**
-     * Do not modify addRestResourceClasses() method.
-     * It is automatically populated with
-     * all resources defined in the project.
-     * If required, comment out calling this method in getClasses().
+     * Nao modifique o metodo addRestResourceClasses() Ele eh preenchido
+     * automaticamente com todos os recursos definidos no projeto. Se
+     * necessario, comente no metodo getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(br.com.logic.trilhajeesql.Webservice.LancamentoRest.class);
     }
-    
+
 }

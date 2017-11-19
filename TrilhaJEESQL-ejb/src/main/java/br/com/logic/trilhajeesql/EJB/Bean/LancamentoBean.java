@@ -4,6 +4,8 @@ import br.com.logic.trilhajeesql.DAO.LancamentoDAO;
 import br.com.logic.trilhajeesql.Model.Lancamento;
 import javax.ejb.Stateless;
 import br.com.logic.trilhajeesql.EJB.Interface.LancamentoLocal;
+import br.com.logic.trilhajeesql.UTIL.Util;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -13,7 +15,7 @@ import javax.inject.Inject;
  * @author Ricardo Vanni
  */
 @Stateless
-public class LancamentoBean implements LancamentoLocal {
+public class LancamentoBean extends Util implements LancamentoLocal {
 
     @Inject
     private LancamentoDAO lancamentoDAO;
@@ -34,7 +36,7 @@ public class LancamentoBean implements LancamentoLocal {
     }
 
     @Override
-    public List<Lancamento> consultarDados() throws Exception {
+    public List<Lancamento> consultarLancamento() throws Exception {
         try {
             List<Lancamento> ret = lancamentoDAO.consultarDados();
 
@@ -49,7 +51,25 @@ public class LancamentoBean implements LancamentoLocal {
     }
 
     @Override
-    public void deletarDados(Lancamento lancamento) throws Exception {
+    public List<Lancamento> consultarLancamentoPorData(String data) throws Exception {
+        try {
+            validarData(data);
+            List<Lancamento> lista = consultarLancamento();
+            List<Lancamento> ret = new ArrayList<>();
+
+            for (Lancamento lancamento : lista) {
+                if (lancamento.getData().equals(data)) {
+                    ret.add(lancamento);
+                }
+            }
+            return ret;
+        } catch (ParseException e) {
+            throw e;
+        }
+    }
+
+    @Override
+    public void deletarLancamento(Lancamento lancamento) throws Exception {
         try {
             lancamentoDAO.deletarDados(lancamento);
 
@@ -59,7 +79,7 @@ public class LancamentoBean implements LancamentoLocal {
     }
 
     @Override
-    public void alterarDados(Integer id, Lancamento dados) throws Exception {
+    public void alterarLancamento(Integer id, Lancamento dados) throws Exception {
         try {
             lancamentoDAO.alterarDados(id, dados);
 
@@ -77,4 +97,5 @@ public class LancamentoBean implements LancamentoLocal {
     public String getDado() throws Exception {
         return "retorno";
     }
+
 }
