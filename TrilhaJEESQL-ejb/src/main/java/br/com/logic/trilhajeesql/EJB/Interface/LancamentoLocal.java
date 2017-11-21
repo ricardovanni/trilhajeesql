@@ -17,6 +17,10 @@ public interface LancamentoLocal {
 
     List<Lancamento> consultarLancamentoPorData(String data) throws Exception;
 
+    List<Lancamento> consultarLancamentoPorNome(String nome) throws Exception;
+
+    List<Lancamento> consultarLancamentoPorTipo(String tipo) throws Exception;
+
     void deletarLancamento(Lancamento lancamento) throws Exception;
 
     void alterarLancamento(Integer id, Lancamento dados) throws Exception;
@@ -25,5 +29,5 @@ public interface LancamentoLocal {
 
     String getConexao() throws Exception;
 
-    String getDado() throws Exception;
+    Integer getDado(String nome) throws Exception;
 }

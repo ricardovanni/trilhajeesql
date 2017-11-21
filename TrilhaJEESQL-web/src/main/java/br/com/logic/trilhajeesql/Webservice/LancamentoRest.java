@@ -37,7 +37,7 @@ public class LancamentoRest {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("consultar")
-    public List<Lancamento> consultarDados() throws Exception {
+    public List<Lancamento> consultarLancamentos() throws Exception {
         return lancamentoBean.consultarLancamento();
     }
 
@@ -54,6 +54,36 @@ public class LancamentoRest {
     @Path("consultarPorData")
     public List<Lancamento> consultarLancamentosPorData(@QueryParam("data") String data) throws Exception {
         return lancamentoBean.consultarLancamentoPorData(data);
+    }
+
+    /**
+     * Este metodo retorna a consulta de todos os lancamentos com filtro para o
+     * nome informado no parametro.
+     *
+     * @param nome Parametro que define a data do lancamento
+     * @return Retorna uma lista de lancamentos filtrados por nome
+     * @throws Exception
+     */
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("consultarPorNome")
+    public List<Lancamento> consultarLancamentosPorNome(@QueryParam("nome") String nome) throws Exception {
+        return lancamentoBean.consultarLancamentoPorNome(nome);
+    }
+
+    /**
+     * Este metodo retorna a consulta de todos os lancamentos com filtro para o
+     * tipo de lancamento informado no parametro.
+     *
+     * @param tipo Parametro que define a data do lancamento
+     * @return Retorna uma lista de lancamentos filtrados por tipo
+     * @throws Exception
+     */
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("consultarPorTipo")
+    public List<Lancamento> consultarLancamentosPorTipo(@QueryParam("tipo") String tipo) throws Exception {
+        return lancamentoBean.consultarLancamentoPorTipo(tipo);
     }
 
 }

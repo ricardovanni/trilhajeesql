@@ -69,6 +69,36 @@ public class LancamentoBean extends Util implements LancamentoLocal {
     }
 
     @Override
+    public List<Lancamento> consultarLancamentoPorNome(String nome) throws Exception {
+        validarNome(nome);
+
+        List<Lancamento> lista = consultarLancamento();
+        List<Lancamento> ret = new ArrayList<>();
+
+        for (Lancamento lancamento : lista) {
+            if (lancamento.getNome().equals(nome)) {
+                ret.add(lancamento);
+            }
+        }
+        return ret;
+    }
+
+    @Override
+    public List<Lancamento> consultarLancamentoPorTipo(String tipo) throws Exception {
+        Integer tipoLancamento = validarTipoLancamento(tipo);
+
+        List<Lancamento> lista = consultarLancamento();
+        List<Lancamento> ret = new ArrayList<>();
+
+        for (Lancamento lancamento : lista) {
+            if (lancamento.getTipoLancamento().equals(tipoLancamento)) {
+                ret.add(lancamento);
+            }
+        }
+        return ret;
+    }
+
+    @Override
     public void deletarLancamento(Lancamento lancamento) throws Exception {
         try {
             lancamentoDAO.deletarDados(lancamento);
@@ -94,8 +124,8 @@ public class LancamentoBean extends Util implements LancamentoLocal {
     }
 
     @Override
-    public String getDado() throws Exception {
-        return "retorno";
+    public Integer getDado(String nome) throws Exception {
+        return validarTipoLancamento(nome);
     }
 
 }
