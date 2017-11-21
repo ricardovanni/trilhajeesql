@@ -70,13 +70,13 @@ public class LancamentoBean extends Util implements LancamentoLocal {
 
     @Override
     public List<Lancamento> consultarLancamentoPorNome(String nome) throws Exception {
-        validarNome(nome);
-
         List<Lancamento> lista = consultarLancamento();
         List<Lancamento> ret = new ArrayList<>();
+        Boolean isValido = Boolean.FALSE;
 
         for (Lancamento lancamento : lista) {
-            if (lancamento.getNome().equals(nome)) {
+            isValido = validarConsultarNome(nome, lancamento.getNome());
+            if(isValido){
                 ret.add(lancamento);
             }
         }

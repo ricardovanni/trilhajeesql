@@ -25,7 +25,7 @@ public abstract class Util {
         }
     }
 
-    public boolean validarNome(String nome) throws Exception {
+    public boolean validarInserirNome(String nome) throws Exception {
         //Regex que define Nome podendo apenas conter caracteres alfabeticos com a primeira letra sendo sempre Maiuscula.
         String pattern = "^[A-Z][a-zãõáéíóúêôãõç]+((?:\\s[a-z]{2,3})?(?:\\s[A-Z][a-zãõáéíóúêôãõç]+))*$";
         Boolean isValido = nome.matches(pattern);
@@ -34,6 +34,26 @@ public abstract class Util {
             return isValido;
         } else {
             throw new Exception("Nome Invalido!");
+        }
+    }
+    
+    public boolean validarConsultarNome(String nome, String nomeBD) throws Exception{
+        nome = Normalizer.normalize(nome, Normalizer.Form.NFD);
+        nome = nome.replaceAll("[^\\p{ASCII}]", "");
+        nome = nome.toUpperCase();
+        
+        nome.toUpperCase();
+        
+        nomeBD = Normalizer.normalize(nomeBD, Normalizer.Form.NFD);
+        nomeBD = nomeBD.replaceAll("[^\\p{ASCII}]", "");
+        nomeBD = nomeBD.toUpperCase();
+        
+        nomeBD.toUpperCase();
+        
+        if(nome != null && nomeBD != null && nomeBD.contains(nome)){
+            return Boolean.TRUE;
+        } else {
+            return Boolean.FALSE;
         }
     }
 
