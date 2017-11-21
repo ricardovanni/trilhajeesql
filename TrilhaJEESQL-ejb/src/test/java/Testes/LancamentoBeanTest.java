@@ -8,7 +8,6 @@ import java.util.List;
 import javax.inject.Inject;
 import org.jboss.arquillian.junit.Arquillian;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -24,7 +23,6 @@ public class LancamentoBeanTest extends AbstractStartTest {
     @Inject
     private ConexaoDAO conexao;
 
-    @Ignore
     @Test
     public void testInserirLancamento() throws Exception {
 
@@ -58,7 +56,6 @@ public class LancamentoBeanTest extends AbstractStartTest {
         Assert.assertEquals(lcto2.getTipoLancamento(), ret.get(1).getTipoLancamento());
     }
 
-    @Ignore
     @Test
     public void testConsultarLancamentoSemRegistros() throws Exception {
 
@@ -73,7 +70,6 @@ public class LancamentoBeanTest extends AbstractStartTest {
         Assert.assertEquals("Nao existem dados de lancamentos registrados.", msgErro);
     }
 
-    @Ignore
     @Test
     public void testConsultarLancamentoPorData() throws Exception {
         String data = "10/10/2017";
@@ -105,7 +101,6 @@ public class LancamentoBeanTest extends AbstractStartTest {
         Assert.assertEquals(lcto.getTipoLancamento(), listaLancamentos.get(0).getTipoLancamento());
     }
 
-    @Ignore
     @Test
     public void testConsultarLancamentoPorDataInvalida() throws Exception {
         String data = "10/25/2017";
@@ -149,21 +144,33 @@ public class LancamentoBeanTest extends AbstractStartTest {
         Assert.assertEquals(lcto.getTipoLancamento(), listaLancamentos.get(0).getTipoLancamento());
     }
 
-    @Ignore
     @Test
-    public void testConsultarLancamentoPorNomeInvalido() throws Exception {
-        String nome = "Ricard8 Vann@i";
+    public void testConsultarLancamentoPorNomeSemRegistro() throws Exception {
+        Lancamento lcto = new Lancamento();
+        lcto.setNome("Kauã Jessé dos Santos");
+        lcto.setData("10/10/2017");
+        lcto.setValor(568.65);
+        lcto.setTipoLancamento(TipoLancamentoEnum.CREDITO.getCodigo());
 
-        String msgErro = "";
-        try {
-            List<Lancamento> listaLancamentos = lancamentoBean.consultarLancamentoPorNome(nome);
-        } catch (Exception e) {
-            msgErro = e.getMessage();
-        }
-        Assert.assertEquals("Nome Invalido!", msgErro);
+        String retorno = lancamentoBean.inserirLancamento(lcto);
+        Assert.assertEquals("Dados Inseridos com sucesso!", retorno);
+
+        Lancamento lcto2 = new Lancamento();
+        lcto2.setNome("Jose");
+        lcto2.setData("16/11/2017");
+        lcto2.setValor(965.65);
+        lcto2.setTipoLancamento(TipoLancamentoEnum.DEBITO.getCodigo());
+
+        retorno = lancamentoBean.inserirLancamento(lcto2);
+        Assert.assertEquals("Dados Inseridos com sucesso!", retorno);
+
+        String nome = "Emirval";
+
+        List<Lancamento> listaLancamentos = lancamentoBean.consultarLancamentoPorNome(nome);
+       
+        Assert.assertTrue(listaLancamentos.isEmpty());
     }
 
-    @Ignore
     @Test
     public void testConsultarLancamentoPorTipoLancamento() throws Exception {
         Lancamento lcto = new Lancamento();
@@ -201,7 +208,6 @@ public class LancamentoBeanTest extends AbstractStartTest {
         Assert.assertEquals(lcto.getTipoLancamento(), listaLancamentos.get(0).getTipoLancamento());
     }
 
-    @Ignore
     @Test
     public void testConsultarLancamentoPorTipoLancamentoInvalido() throws Exception {
         String tipo = "Crreditoo";
