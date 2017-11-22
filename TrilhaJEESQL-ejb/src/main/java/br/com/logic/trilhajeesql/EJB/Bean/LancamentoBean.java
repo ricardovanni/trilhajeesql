@@ -28,8 +28,11 @@ public class LancamentoBean extends Util implements LancamentoLocal {
     @Override
     public String inserirLancamento(Lancamento lancamento) throws Exception {
         try {
+            validarInserirNome(lancamento.getNome());
+            validarData(lancamento.getData());
+            validarValor(lancamento.getValor().toString());
+            lancamento.setIdTipoLancamento(validarTipoLancamento(lancamento.getTipoLancamento()));
             return lancamentoDAO.inserirDados(lancamento);
-
         } catch (Exception e) {
             throw e;
         }
@@ -76,7 +79,7 @@ public class LancamentoBean extends Util implements LancamentoLocal {
 
         for (Lancamento lancamento : lista) {
             isValido = validarConsultarNome(nome, lancamento.getNome());
-            if(isValido){
+            if (isValido) {
                 ret.add(lancamento);
             }
         }
@@ -91,7 +94,7 @@ public class LancamentoBean extends Util implements LancamentoLocal {
         List<Lancamento> ret = new ArrayList<>();
 
         for (Lancamento lancamento : lista) {
-            if (lancamento.getTipoLancamento().equals(tipoLancamento)) {
+            if (lancamento.getIdTipoLancamento().equals(tipoLancamento)) {
                 ret.add(lancamento);
             }
         }

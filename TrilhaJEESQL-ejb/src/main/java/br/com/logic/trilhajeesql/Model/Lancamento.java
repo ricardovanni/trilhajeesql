@@ -1,5 +1,6 @@
 package br.com.logic.trilhajeesql.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 
 /**
@@ -10,6 +11,13 @@ public class Lancamento implements Serializable {
 
     private Integer id = 0;
 
+    private String nome = "";
+    private String data = "";
+    private Double valor = 0D;
+    private String tipoLancamento = "";
+    @JsonIgnore
+    private Integer idTipoLancamento = 0;
+
     public Integer getId() {
         return id;
     }
@@ -17,10 +25,6 @@ public class Lancamento implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
-    private String nome = "";
-    private String data = "";
-    private Double valor = 0D;
-    private Integer tipoLancamento = 0;
 
     public String getNome() {
         return nome;
@@ -46,11 +50,19 @@ public class Lancamento implements Serializable {
         this.valor = valor;
     }
 
-    public Integer getTipoLancamento() {
+    public String getTipoLancamento() {
         return tipoLancamento;
     }
 
-    public void setTipoLancamento(Integer tipoLancamento) {
+    public void setTipoLancamento(String tipoLancamento) {
         this.tipoLancamento = tipoLancamento;
+    }
+
+    public Integer getIdTipoLancamento() {
+        return idTipoLancamento;
+    }
+
+    public void setIdTipoLancamento(Integer idTipoLancamento) {
+        this.idTipoLancamento = idTipoLancamento;
     }
 }

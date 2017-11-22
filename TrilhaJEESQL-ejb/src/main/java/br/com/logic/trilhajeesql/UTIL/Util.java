@@ -36,21 +36,21 @@ public abstract class Util {
             throw new Exception("Nome Invalido!");
         }
     }
-    
-    public boolean validarConsultarNome(String nome, String nomeBD) throws Exception{
+
+    public boolean validarConsultarNome(String nome, String nomeBD) throws Exception {
         nome = Normalizer.normalize(nome, Normalizer.Form.NFD);
         nome = nome.replaceAll("[^\\p{ASCII}]", "");
         nome = nome.toUpperCase();
-        
-        nome.toUpperCase();
-        
+
+        nome = nome.toUpperCase();
+
         nomeBD = Normalizer.normalize(nomeBD, Normalizer.Form.NFD);
         nomeBD = nomeBD.replaceAll("[^\\p{ASCII}]", "");
         nomeBD = nomeBD.toUpperCase();
-        
-        nomeBD.toUpperCase();
-        
-        if(nome != null && nomeBD != null && nomeBD.contains(nome)){
+
+        nomeBD = nomeBD.toUpperCase();
+
+        if (nome != null && nomeBD != null && nomeBD.contains(nome)) {
             return Boolean.TRUE;
         } else {
             return Boolean.FALSE;
@@ -74,6 +74,18 @@ public abstract class Util {
             default:
                 throw new Exception("Tipo de Lancamento Invalido!");
         }
+    }
 
+    public boolean validarValor(String valor) throws Exception {
+        valor = valor.replace(",", ".");
+        //Regex que define Valor podendo apenas conter caracteres numericos.
+        String pattern = "^\\d{1,6}(?:\\.\\d{1,2})?$";
+        Boolean isValido = valor.matches(pattern);
+
+        if (isValido) {
+            return isValido;
+        } else {
+            throw new Exception("Valor Invalido!");
+        }
     }
 }

@@ -11,6 +11,9 @@ import javax.ws.rs.core.MediaType;
 import br.com.logic.trilhajeesql.EJB.Interface.LancamentoLocal;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
 
 /**
@@ -26,6 +29,20 @@ public class LancamentoRest {
     private UriInfo context;
     @EJB
     private LancamentoLocal lancamentoBean;
+
+    /**
+     * Este Metodo Insere dados de lancamentos na base de dados
+     *
+     * @param lancamento Parametro de entrada de dados
+     * @return Retorna mensagem de sucesso na insercao de dados
+     * @throws Exception
+     */
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("inserir")
+    public String inserirLancamento(Lancamento lancamento) throws Exception {
+        return lancamentoBean.inserirLancamento(lancamento);
+    }
 
     /**
      * Este Metodo retorna a consulta de todos os lancamentos cadastrados na

@@ -38,15 +38,16 @@ public class LancamentoDAO implements Serializable {
             sql.append("\n VALUES ('").append(dados.getNome()).append("', '")
                     .append(dados.getData()).append("', ")
                     .append(dados.getValor()).append(", ")
-                    .append(dados.getTipoLancamento()).append(")");
+                    .append(dados.getIdTipoLancamento()).append(")");
 
             stmt.execute(sql.toString());
             stmt.execute("commit");
 
             return "Dados Inseridos com sucesso!";
-
         } catch (SQLException e) {
             throw e;
+        } finally {
+            connection.finalizarConexao(conn, stmt, null);
         }
     }
 
@@ -63,8 +64,9 @@ public class LancamentoDAO implements Serializable {
             //</editor-fold>
 
             StringBuilder sql = new StringBuilder();
-            sql.append("\n SELECT id, nome, data, valor, idtipolancamento ");
-            sql.append("\n FROM lancamento ");
+            sql.append("\n SELECT l.id, l.nome, l.data, l.valor, l.idtipolancamento, tl.tipolancamento");
+            sql.append("\n FROM lancamento l ");
+            sql.append("\n INNER JOIN tipolancamento tl ON tl.id = l.idtipolancamento ");
 
             rs = stmt.executeQuery(sql.toString());
 
@@ -74,13 +76,16 @@ public class LancamentoDAO implements Serializable {
                 lcto.setNome(rs.getString("nome"));
                 lcto.setData(rs.getString("data"));
                 lcto.setValor(rs.getDouble("valor"));
-                lcto.setTipoLancamento(rs.getInt("idtipolancamento"));
+                lcto.setIdTipoLancamento(rs.getInt("idtipolancamento"));
+                lcto.setTipoLancamento(rs.getString("tipolancamento"));
 
                 ret.add(lcto);
             }
             return ret;
         } catch (SQLException e) {
             throw e;
+        } finally {
+            connection.finalizarConexao(conn, stmt, rs);
         }
     }
 
@@ -104,6 +109,8 @@ public class LancamentoDAO implements Serializable {
 
         } catch (SQLException e) {
             throw e;
+        } finally {
+            connection.finalizarConexao(conn, stmt, null);
         }
     }
 
@@ -130,6 +137,8 @@ public class LancamentoDAO implements Serializable {
 
         } catch (SQLException e) {
             throw e;
+        } finally {
+            connection.finalizarConexao(conn, stmt, null);
         }
     }
 
@@ -138,7 +147,7 @@ public class LancamentoDAO implements Serializable {
         ret.setNome("Ricardo");
         ret.setData("10/11/2017");
         ret.setValor(134.56);
-        ret.setTipoLancamento(1);
+        ret.setTipoLancamento("1");
         return ret;
     }
 

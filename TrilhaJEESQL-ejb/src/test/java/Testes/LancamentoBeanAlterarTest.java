@@ -13,10 +13,10 @@ import org.junit.runner.RunWith;
 
 /**
  *
- * @author Rick-PC
+ * @author Ricardo Vanni
  */
 @RunWith(Arquillian.class)
-public class LancamentoBeanTest extends AbstractStartTest {
+public class LancamentoBeanAlterarTest extends AbstractStartTest {
 
     @Inject
     private LancamentoLocal lancamentoBean;
@@ -24,41 +24,7 @@ public class LancamentoBeanTest extends AbstractStartTest {
     private ConexaoDAO conexao;
 
     @Test
-    public void testInserirLancamento() throws Exception {
-
-        Lancamento lcto = new Lancamento();
-        lcto.setNome("Gabriel");
-        lcto.setData("16/11/2017");
-        lcto.setValor(568.65);
-        lcto.setTipoLancamento(TipoLancamentoEnum.CREDITO.getCodigo());
-
-        String retorno = lancamentoBean.inserirLancamento(lcto);
-        Assert.assertEquals("Dados Inseridos com sucesso!", retorno);
-
-        Lancamento lcto2 = new Lancamento();
-        lcto2.setNome("Rafael");
-        lcto2.setData("16/11/2017");
-        lcto2.setValor(965.65);
-        lcto2.setTipoLancamento(TipoLancamentoEnum.DEBITO.getCodigo());
-
-        retorno = lancamentoBean.inserirLancamento(lcto2);
-        Assert.assertEquals("Dados Inseridos com sucesso!", retorno);
-
-        List<Lancamento> ret = lancamentoBean.consultarLancamento();
-        Assert.assertEquals(2, ret.size());
-        Assert.assertEquals(lcto.getNome(), ret.get(0).getNome());
-        Assert.assertEquals(lcto.getData(), ret.get(0).getData());
-        Assert.assertEquals(lcto.getValor(), ret.get(0).getValor(), 0.0001);
-        Assert.assertEquals(lcto.getTipoLancamento(), ret.get(0).getTipoLancamento());
-        Assert.assertEquals(lcto2.getNome(), ret.get(1).getNome());
-        Assert.assertEquals(lcto2.getData(), ret.get(1).getData());
-        Assert.assertEquals(lcto2.getValor(), ret.get(1).getValor(), 0.0001);
-        Assert.assertEquals(lcto2.getTipoLancamento(), ret.get(1).getTipoLancamento());
-    }
-
-    @Test
     public void testConsultarLancamentoSemRegistros() throws Exception {
-
         String msgErro = "";
         try {
             List<Lancamento> listaLancamentos = lancamentoBean.consultarLancamento();
@@ -78,7 +44,7 @@ public class LancamentoBeanTest extends AbstractStartTest {
         lcto.setNome("Maria");
         lcto.setData("10/10/2017");
         lcto.setValor(568.65);
-        lcto.setTipoLancamento(TipoLancamentoEnum.CREDITO.getCodigo());
+        lcto.setTipoLancamento(TipoLancamentoEnum.CREDITO.getTipo());
 
         String retorno = lancamentoBean.inserirLancamento(lcto);
         Assert.assertEquals("Dados Inseridos com sucesso!", retorno);
@@ -87,7 +53,7 @@ public class LancamentoBeanTest extends AbstractStartTest {
         lcto2.setNome("Jose");
         lcto2.setData("16/11/2017");
         lcto2.setValor(965.65);
-        lcto2.setTipoLancamento(TipoLancamentoEnum.DEBITO.getCodigo());
+        lcto2.setTipoLancamento(TipoLancamentoEnum.DEBITO.getTipo());
 
         retorno = lancamentoBean.inserirLancamento(lcto2);
         Assert.assertEquals("Dados Inseridos com sucesso!", retorno);
@@ -120,7 +86,7 @@ public class LancamentoBeanTest extends AbstractStartTest {
         lcto.setNome("Kauã Jessé dos Santos");
         lcto.setData("10/10/2017");
         lcto.setValor(568.65);
-        lcto.setTipoLancamento(TipoLancamentoEnum.CREDITO.getCodigo());
+        lcto.setTipoLancamento(TipoLancamentoEnum.CREDITO.getTipo());
 
         String retorno = lancamentoBean.inserirLancamento(lcto);
         Assert.assertEquals("Dados Inseridos com sucesso!", retorno);
@@ -129,7 +95,7 @@ public class LancamentoBeanTest extends AbstractStartTest {
         lcto2.setNome("Jose");
         lcto2.setData("16/11/2017");
         lcto2.setValor(965.65);
-        lcto2.setTipoLancamento(TipoLancamentoEnum.DEBITO.getCodigo());
+        lcto2.setTipoLancamento(TipoLancamentoEnum.DEBITO.getTipo());
 
         retorno = lancamentoBean.inserirLancamento(lcto2);
         Assert.assertEquals("Dados Inseridos com sucesso!", retorno);
@@ -150,7 +116,7 @@ public class LancamentoBeanTest extends AbstractStartTest {
         lcto.setNome("Kauã Jessé dos Santos");
         lcto.setData("10/10/2017");
         lcto.setValor(568.65);
-        lcto.setTipoLancamento(TipoLancamentoEnum.CREDITO.getCodigo());
+        lcto.setTipoLancamento(TipoLancamentoEnum.CREDITO.getTipo());
 
         String retorno = lancamentoBean.inserirLancamento(lcto);
         Assert.assertEquals("Dados Inseridos com sucesso!", retorno);
@@ -159,7 +125,7 @@ public class LancamentoBeanTest extends AbstractStartTest {
         lcto2.setNome("Jose");
         lcto2.setData("16/11/2017");
         lcto2.setValor(965.65);
-        lcto2.setTipoLancamento(TipoLancamentoEnum.DEBITO.getCodigo());
+        lcto2.setTipoLancamento(TipoLancamentoEnum.DEBITO.getTipo());
 
         retorno = lancamentoBean.inserirLancamento(lcto2);
         Assert.assertEquals("Dados Inseridos com sucesso!", retorno);
@@ -167,7 +133,7 @@ public class LancamentoBeanTest extends AbstractStartTest {
         String nome = "Emirval";
 
         List<Lancamento> listaLancamentos = lancamentoBean.consultarLancamentoPorNome(nome);
-       
+
         Assert.assertTrue(listaLancamentos.isEmpty());
     }
 
@@ -177,7 +143,7 @@ public class LancamentoBeanTest extends AbstractStartTest {
         lcto.setNome("Kauã Jessé dos Santos");
         lcto.setData("10/10/2017");
         lcto.setValor(568.65);
-        lcto.setTipoLancamento(TipoLancamentoEnum.CREDITO.getCodigo());
+        lcto.setTipoLancamento(TipoLancamentoEnum.CREDITO.getTipo());
 
         String retorno = lancamentoBean.inserirLancamento(lcto);
         Assert.assertEquals("Dados Inseridos com sucesso!", retorno);
@@ -186,7 +152,7 @@ public class LancamentoBeanTest extends AbstractStartTest {
         lcto2.setNome("Jose");
         lcto2.setData("16/11/2017");
         lcto2.setValor(965.65);
-        lcto2.setTipoLancamento(TipoLancamentoEnum.DEBITO.getCodigo());
+        lcto2.setTipoLancamento(TipoLancamentoEnum.DEBITO.getTipo());
 
         retorno = lancamentoBean.inserirLancamento(lcto2);
         Assert.assertEquals("Dados Inseridos com sucesso!", retorno);
@@ -228,7 +194,5 @@ public class LancamentoBeanTest extends AbstractStartTest {
             msgErro = e.getMessage();
         }
         Assert.assertEquals("Tipo de Lancamento Invalido!", msgErro);
-
     }
-
 }

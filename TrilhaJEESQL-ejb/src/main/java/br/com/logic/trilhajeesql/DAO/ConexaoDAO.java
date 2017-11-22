@@ -2,7 +2,11 @@ package br.com.logic.trilhajeesql.DAO;
 
 import java.io.Serializable;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.enterprise.context.SessionScoped;
 import javax.sql.DataSource;
@@ -33,5 +37,21 @@ public class ConexaoDAO implements Serializable {
 
     public Connection getConnection() {
         return conn;
+    }
+
+    public void finalizarConexao(Connection conn, Statement stmt, ResultSet rs) {
+        if (conn != null) {
+            try {
+                conn.close();
+                if (stmt != null) {
+                    stmt.close();
+                }
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ConexaoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 }
