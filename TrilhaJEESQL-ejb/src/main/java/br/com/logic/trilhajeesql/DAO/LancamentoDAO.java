@@ -114,7 +114,7 @@ public class LancamentoDAO implements Serializable {
         }
     }
 
-    public void alterarDados(Integer id, Lancamento dados) throws Exception {
+    public String alterarDados(Lancamento dados) throws Exception {
         Connection conn = null;
         Statement stmt = null;
 
@@ -129,12 +129,13 @@ public class LancamentoDAO implements Serializable {
             sql.append("\n nome = '").append(dados.getNome()).append("',");
             sql.append("\n data = '").append(dados.getData()).append("',");
             sql.append("\n valor = ").append(dados.getValor()).append(",");
-            sql.append("\n idtipolancamento = ").append(dados.getTipoLancamento());
-            sql.append("\n WHERE id = ").append(id);
+            sql.append("\n idtipolancamento = ").append(dados.getIdTipoLancamento());
+            sql.append("\n WHERE id = ").append(dados.getId());
 
             stmt.execute(sql.toString());
             stmt.execute("commit");
 
+            return "Dados de lancamento de contas alterado com sucesso!";
         } catch (SQLException e) {
             throw e;
         } finally {

@@ -10,7 +10,7 @@ import java.util.Date;
  *
  * @author Ricardo Vanni
  */
-public abstract class Util {
+public abstract class LancamentoUtil {
 
     public String validarData(String data) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");

@@ -4,7 +4,7 @@ import br.com.logic.trilhajeesql.DAO.LancamentoDAO;
 import br.com.logic.trilhajeesql.Model.Lancamento;
 import javax.ejb.Stateless;
 import br.com.logic.trilhajeesql.EJB.Interface.LancamentoLocal;
-import br.com.logic.trilhajeesql.UTIL.Util;
+import br.com.logic.trilhajeesql.UTIL.LancamentoUtil;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,7 @@ import javax.inject.Inject;
  * @author Ricardo Vanni
  */
 @Stateless
-public class LancamentoBean extends Util implements LancamentoLocal {
+public class LancamentoBean extends LancamentoUtil implements LancamentoLocal {
 
     @Inject
     private LancamentoDAO lancamentoDAO;
@@ -83,6 +83,10 @@ public class LancamentoBean extends Util implements LancamentoLocal {
                 ret.add(lancamento);
             }
         }
+
+        if (ret.isEmpty()) {
+            throw new Exception("Nao existem dados para consulta com o nome solicitado: '" + nome + "'");
+        }
         return ret;
     }
 
@@ -112,23 +116,22 @@ public class LancamentoBean extends Util implements LancamentoLocal {
     }
 
     @Override
-    public void alterarLancamento(Integer id, Lancamento dados) throws Exception {
+    public String alterarLancamento(Lancamento dados) throws Exception {
         try {
-            lancamentoDAO.alterarDados(id, dados);
+            validarInserirNome(dados.getNome());
+            validarData(dados.getData());
+            validarValor(dados.getValor().toString());
+            dados.setIdTipoLancamento(validarTipoLancamento(dados.getTipoLancamento()));
 
+            List<Lancamento> lista = consultarLancamento();
+            for (Lancamento lancamento : lista) {
+                if (lancamento.getId().equals(dados.getId())) {
+                    return lancamentoDAO.alterarDados(dados);
+                }
+            }
+            throw new Exception("O Id de numero '" + dados.getId() + "' informado nao consta no registro de dados de lancamentos");
         } catch (Exception e) {
             throw e;
         }
     }
-
-    @Override
-    public String getConexao() throws Exception {
-        return lancamentoDAO.getConexao();
-    }
-
-    @Override
-    public Integer getDado(String nome) throws Exception {
-        return validarTipoLancamento(nome);
-    }
-
 }

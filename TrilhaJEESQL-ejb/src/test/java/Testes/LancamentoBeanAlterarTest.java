@@ -13,7 +13,7 @@ import org.junit.runner.RunWith;
 
 /**
  *
- * @author Ricardo Vanni
+ * @author Rick-PC
  */
 @RunWith(Arquillian.class)
 public class LancamentoBeanAlterarTest extends AbstractStartTest {
@@ -24,175 +24,181 @@ public class LancamentoBeanAlterarTest extends AbstractStartTest {
     private ConexaoDAO conexao;
 
     @Test
-    public void testConsultarLancamentoSemRegistros() throws Exception {
-        String msgErro = "";
-        try {
-            List<Lancamento> listaLancamentos = lancamentoBean.consultarLancamento();
-
-        } catch (Exception e) {
-            msgErro = e.getMessage();
-        }
-
-        Assert.assertEquals("Nao existem dados de lancamentos registrados.", msgErro);
-    }
-
-    @Test
-    public void testConsultarLancamentoPorData() throws Exception {
-        String data = "10/10/2017";
+    public void testAlterarLancamentoSucesso() throws Exception {
 
         Lancamento lcto = new Lancamento();
-        lcto.setNome("Maria");
-        lcto.setData("10/10/2017");
+        lcto.setNome("Gabriel Alexandre");
+        lcto.setData("16/11/2017");
         lcto.setValor(568.65);
         lcto.setTipoLancamento(TipoLancamentoEnum.CREDITO.getTipo());
 
         String retorno = lancamentoBean.inserirLancamento(lcto);
         Assert.assertEquals("Dados Inseridos com sucesso!", retorno);
 
-        Lancamento lcto2 = new Lancamento();
-        lcto2.setNome("Jose");
-        lcto2.setData("16/11/2017");
-        lcto2.setValor(965.65);
-        lcto2.setTipoLancamento(TipoLancamentoEnum.DEBITO.getTipo());
+        List<Lancamento> ret = lancamentoBean.consultarLancamentoPorNome("Gabriel Alexandre");
 
-        retorno = lancamentoBean.inserirLancamento(lcto2);
-        Assert.assertEquals("Dados Inseridos com sucesso!", retorno);
+        Lancamento lctoAlt = new Lancamento();
+        lctoAlt.setId(ret.get(0).getId());
+        lctoAlt.setNome("Gabriel Alexandre Vanni");
+        lctoAlt.setData("23/11/2017");
+        lctoAlt.setValor(645.37);
+        lctoAlt.setTipoLancamento("Debito");
 
-        List<Lancamento> listaLancamentos = lancamentoBean.consultarLancamentoPorData(data);
+        retorno = lancamentoBean.alterarLancamento(lctoAlt);
+        Assert.assertEquals("Dados de lancamento de contas alterado com sucesso!", retorno);
 
-        Assert.assertEquals(1, listaLancamentos.size());
-        Assert.assertEquals(lcto.getNome(), listaLancamentos.get(0).getNome());
-        Assert.assertEquals(lcto.getData(), listaLancamentos.get(0).getData());
-        Assert.assertEquals(lcto.getValor(), listaLancamentos.get(0).getValor());
-        Assert.assertEquals(lcto.getTipoLancamento(), listaLancamentos.get(0).getTipoLancamento());
+        ret = lancamentoBean.consultarLancamento();
+        Assert.assertEquals(1, ret.size());
+        Assert.assertEquals(lctoAlt.getId(), ret.get(0).getId());
+        Assert.assertEquals(lctoAlt.getNome(), ret.get(0).getNome());
+        Assert.assertEquals(lctoAlt.getData(), ret.get(0).getData());
+        Assert.assertEquals(lctoAlt.getValor(), ret.get(0).getValor(), 0.0001);
+        Assert.assertEquals(lctoAlt.getTipoLancamento().toUpperCase(), ret.get(0).getTipoLancamento());
     }
 
     @Test
-    public void testConsultarLancamentoPorDataInvalida() throws Exception {
-        String data = "10/25/2017";
+    public void testAlterarLancamentoErroNome() throws Exception {
+        Lancamento lcto = new Lancamento();
+        lcto.setId(1);
+        lcto.setNome("Gabriel Alexandre");
+        lcto.setData("16/11/2017");
+        lcto.setValor(568.65);
+        lcto.setTipoLancamento(TipoLancamentoEnum.CREDITO.getTipo());
+
+        String retorno = lancamentoBean.inserirLancamento(lcto);
+        Assert.assertEquals("Dados Inseridos com sucesso!", retorno);
+
+        Lancamento lctoAlt = new Lancamento();
+        lctoAlt.setId(1);
+        lctoAlt.setNome("GAB2el Alexandre Vanni");
+        lctoAlt.setData("23/11/2017");
+        lctoAlt.setValor(645.37);
+        lctoAlt.setTipoLancamento("Debito");
 
         String msgErro = "";
         try {
-            List<Lancamento> listaLancamentos = lancamentoBean.consultarLancamentoPorData(data);
+            retorno = lancamentoBean.alterarLancamento(lctoAlt);
         } catch (Exception e) {
             msgErro = e.getMessage();
         }
+
+        Assert.assertEquals("Nome Invalido!", msgErro);
+    }
+
+    @Test
+    public void testAlterarLancamentoErroData() throws Exception {
+        Lancamento lcto = new Lancamento();
+        lcto.setId(1);
+        lcto.setNome("Gabriel Alexandre");
+        lcto.setData("16/11/2017");
+        lcto.setValor(568.65);
+        lcto.setTipoLancamento(TipoLancamentoEnum.CREDITO.getTipo());
+
+        String retorno = lancamentoBean.inserirLancamento(lcto);
+        Assert.assertEquals("Dados Inseridos com sucesso!", retorno);
+
+        Lancamento lctoAlt = new Lancamento();
+        lctoAlt.setId(1);
+        lctoAlt.setNome("Gabriel Alexandre Vanni");
+        lctoAlt.setData("45/11/2017");
+        lctoAlt.setValor(645.37);
+        lctoAlt.setTipoLancamento("Debito");
+
+        String msgErro = "";
+        try {
+            retorno = lancamentoBean.alterarLancamento(lctoAlt);
+        } catch (Exception e) {
+            msgErro = e.getMessage();
+        }
+
         Assert.assertEquals("Data Invalida!", msgErro);
     }
 
     @Test
-    public void testConsultarLancamentoPorNome() throws Exception {
+    public void testAlterarLancamentoErroValor() throws Exception {
         Lancamento lcto = new Lancamento();
-        lcto.setNome("Kauã Jessé dos Santos");
-        lcto.setData("10/10/2017");
+        lcto.setId(1);
+        lcto.setNome("Gabriel Alexandre");
+        lcto.setData("16/11/2017");
         lcto.setValor(568.65);
         lcto.setTipoLancamento(TipoLancamentoEnum.CREDITO.getTipo());
 
         String retorno = lancamentoBean.inserirLancamento(lcto);
         Assert.assertEquals("Dados Inseridos com sucesso!", retorno);
 
-        Lancamento lcto2 = new Lancamento();
-        lcto2.setNome("Jose");
-        lcto2.setData("16/11/2017");
-        lcto2.setValor(965.65);
-        lcto2.setTipoLancamento(TipoLancamentoEnum.DEBITO.getTipo());
-
-        retorno = lancamentoBean.inserirLancamento(lcto2);
-        Assert.assertEquals("Dados Inseridos com sucesso!", retorno);
-
-        String nome = "Kauã";
-        List<Lancamento> listaLancamentos = lancamentoBean.consultarLancamentoPorNome(nome);
-
-        Assert.assertEquals(1, listaLancamentos.size());
-        Assert.assertEquals(lcto.getNome(), listaLancamentos.get(0).getNome());
-        Assert.assertEquals(lcto.getData(), listaLancamentos.get(0).getData());
-        Assert.assertEquals(lcto.getValor(), listaLancamentos.get(0).getValor());
-        Assert.assertEquals(lcto.getTipoLancamento(), listaLancamentos.get(0).getTipoLancamento());
-    }
-
-    @Test
-    public void testConsultarLancamentoPorNomeSemRegistro() throws Exception {
-        Lancamento lcto = new Lancamento();
-        lcto.setNome("Kauã Jessé dos Santos");
-        lcto.setData("10/10/2017");
-        lcto.setValor(568.65);
-        lcto.setTipoLancamento(TipoLancamentoEnum.CREDITO.getTipo());
-
-        String retorno = lancamentoBean.inserirLancamento(lcto);
-        Assert.assertEquals("Dados Inseridos com sucesso!", retorno);
-
-        Lancamento lcto2 = new Lancamento();
-        lcto2.setNome("Jose");
-        lcto2.setData("16/11/2017");
-        lcto2.setValor(965.65);
-        lcto2.setTipoLancamento(TipoLancamentoEnum.DEBITO.getTipo());
-
-        retorno = lancamentoBean.inserirLancamento(lcto2);
-        Assert.assertEquals("Dados Inseridos com sucesso!", retorno);
-
-        String nome = "Emirval";
-
-        List<Lancamento> listaLancamentos = lancamentoBean.consultarLancamentoPorNome(nome);
-
-        Assert.assertTrue(listaLancamentos.isEmpty());
-    }
-
-    @Test
-    public void testConsultarLancamentoPorTipoLancamento() throws Exception {
-        Lancamento lcto = new Lancamento();
-        lcto.setNome("Kauã Jessé dos Santos");
-        lcto.setData("10/10/2017");
-        lcto.setValor(568.65);
-        lcto.setTipoLancamento(TipoLancamentoEnum.CREDITO.getTipo());
-
-        String retorno = lancamentoBean.inserirLancamento(lcto);
-        Assert.assertEquals("Dados Inseridos com sucesso!", retorno);
-
-        Lancamento lcto2 = new Lancamento();
-        lcto2.setNome("Jose");
-        lcto2.setData("16/11/2017");
-        lcto2.setValor(965.65);
-        lcto2.setTipoLancamento(TipoLancamentoEnum.DEBITO.getTipo());
-
-        retorno = lancamentoBean.inserirLancamento(lcto2);
-        Assert.assertEquals("Dados Inseridos com sucesso!", retorno);
-
-        List<Lancamento> listaLancamentos = lancamentoBean.consultarLancamentoPorTipo("DéBiTo");
-
-        Assert.assertEquals(1, listaLancamentos.size());
-        Assert.assertEquals(lcto2.getNome(), listaLancamentos.get(0).getNome());
-        Assert.assertEquals(lcto2.getData(), listaLancamentos.get(0).getData());
-        Assert.assertEquals(lcto2.getValor(), listaLancamentos.get(0).getValor());
-        Assert.assertEquals(lcto2.getTipoLancamento(), listaLancamentos.get(0).getTipoLancamento());
-
-        listaLancamentos = lancamentoBean.consultarLancamentoPorTipo("1");
-
-        Assert.assertEquals(1, listaLancamentos.size());
-        Assert.assertEquals(lcto.getNome(), listaLancamentos.get(0).getNome());
-        Assert.assertEquals(lcto.getData(), listaLancamentos.get(0).getData());
-        Assert.assertEquals(lcto.getValor(), listaLancamentos.get(0).getValor());
-        Assert.assertEquals(lcto.getTipoLancamento(), listaLancamentos.get(0).getTipoLancamento());
-    }
-
-    @Test
-    public void testConsultarLancamentoPorTipoLancamentoInvalido() throws Exception {
-        String tipo = "Crreditoo";
+        Lancamento lctoAlt = new Lancamento();
+        lctoAlt.setId(1);
+        lctoAlt.setNome("Gabriel Alexandre Vanni");
+        lctoAlt.setData("25/11/2017");
+        lctoAlt.setValor(645.237);
+        lctoAlt.setTipoLancamento("Debito");
 
         String msgErro = "";
         try {
-            List<Lancamento> listaLancamentos = lancamentoBean.consultarLancamentoPorTipo(tipo);
+            retorno = lancamentoBean.alterarLancamento(lctoAlt);
         } catch (Exception e) {
             msgErro = e.getMessage();
         }
-        Assert.assertEquals("Tipo de Lancamento Invalido!", msgErro);
 
-        tipo = "3";
-        msgErro = "";
+        Assert.assertEquals("Valor Invalido!", msgErro);
+    }
+
+    @Test
+    public void testAlterarLancamentoErroTipo() throws Exception {
+        Lancamento lcto = new Lancamento();
+        lcto.setId(1);
+        lcto.setNome("Gabriel Alexandre");
+        lcto.setData("16/11/2017");
+        lcto.setValor(568.65);
+        lcto.setTipoLancamento(TipoLancamentoEnum.CREDITO.getTipo());
+
+        String retorno = lancamentoBean.inserirLancamento(lcto);
+        Assert.assertEquals("Dados Inseridos com sucesso!", retorno);
+
+        Lancamento lctoAlt = new Lancamento();
+        lctoAlt.setId(1);
+        lctoAlt.setNome("Gabriel Alexandre Vanni");
+        lctoAlt.setData("25/11/2017");
+        lctoAlt.setValor(645.27);
+        lctoAlt.setTipoLancamento("FElito");
+
+        String msgErro = "";
         try {
-            List<Lancamento> listaLancamentos = lancamentoBean.consultarLancamentoPorTipo(tipo);
+            retorno = lancamentoBean.alterarLancamento(lctoAlt);
         } catch (Exception e) {
             msgErro = e.getMessage();
         }
+
         Assert.assertEquals("Tipo de Lancamento Invalido!", msgErro);
+    }
+
+    @Test
+    public void testAlterarLancamentoIdInvalido() throws Exception {
+
+        Lancamento lcto = new Lancamento();
+        lcto.setId(1);
+        lcto.setNome("Gabriel Alexandre");
+        lcto.setData("16/11/2017");
+        lcto.setValor(568.65);
+        lcto.setTipoLancamento(TipoLancamentoEnum.CREDITO.getTipo());
+
+        String retorno = lancamentoBean.inserirLancamento(lcto);
+        Assert.assertEquals("Dados Inseridos com sucesso!", retorno);
+
+        Lancamento lctoAlt = new Lancamento();
+        lctoAlt.setId(100);
+        lctoAlt.setNome("Gabriel Alexandre Vanni");
+        lctoAlt.setData("23/11/2017");
+        lctoAlt.setValor(645.37);
+        lctoAlt.setTipoLancamento("Debito");
+
+        String msgErro = "";
+        try {
+            retorno = lancamentoBean.alterarLancamento(lctoAlt);
+        } catch (Exception e) {
+            msgErro = e.getMessage();
+        }
+
+        Assert.assertEquals("O Id de numero '" + lctoAlt.getId() + "' informado nao consta no registro de dados de lancamentos", msgErro);
     }
 }

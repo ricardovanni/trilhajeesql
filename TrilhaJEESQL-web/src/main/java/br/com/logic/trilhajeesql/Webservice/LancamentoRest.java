@@ -9,12 +9,12 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 import br.com.logic.trilhajeesql.EJB.Interface.LancamentoLocal;
-import java.util.List;
 import javax.enterprise.context.RequestScoped;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Response;
 
 /**
  * REST Web Service
@@ -34,14 +34,18 @@ public class LancamentoRest {
      * Este Metodo Insere dados de lancamentos na base de dados
      *
      * @param lancamento Parametro de entrada de dados
-     * @return Retorna mensagem de sucesso na insercao de dados
+     * @return Retorna mensagem de sucesso ou erro na insercao de dados
      * @throws Exception
      */
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("inserir")
-    public String inserirLancamento(Lancamento lancamento) throws Exception {
-        return lancamentoBean.inserirLancamento(lancamento);
+    public Response inserirLancamento(Lancamento lancamento) throws Exception {
+        try {
+            return Response.ok(lancamentoBean.inserirLancamento(lancamento)).build();
+        } catch (Exception e) {
+            return Response.ok(e.getMessage()).status(HttpServletResponse.SC_BAD_REQUEST).build();
+        }
     }
 
     /**
@@ -54,8 +58,12 @@ public class LancamentoRest {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("consultar")
-    public List<Lancamento> consultarLancamentos() throws Exception {
-        return lancamentoBean.consultarLancamento();
+    public Response consultarLancamentos() throws Exception {
+        try {
+            return Response.ok(lancamentoBean.consultarLancamento()).build();
+        } catch (Exception e) {
+            return Response.ok(e.getMessage()).status(HttpServletResponse.SC_BAD_REQUEST).build();
+        }
     }
 
     /**
@@ -69,8 +77,12 @@ public class LancamentoRest {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("consultarPorData")
-    public List<Lancamento> consultarLancamentosPorData(@QueryParam("data") String data) throws Exception {
-        return lancamentoBean.consultarLancamentoPorData(data);
+    public Response consultarLancamentosPorData(@QueryParam("data") String data) throws Exception {
+        try {
+            return Response.ok(lancamentoBean.consultarLancamentoPorData(data)).build();
+        } catch (Exception e) {
+            return Response.ok(e.getMessage()).status(HttpServletResponse.SC_BAD_REQUEST).build();
+        }
     }
 
     /**
@@ -84,8 +96,12 @@ public class LancamentoRest {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("consultarPorNome")
-    public List<Lancamento> consultarLancamentosPorNome(@QueryParam("nome") String nome) throws Exception {
-        return lancamentoBean.consultarLancamentoPorNome(nome);
+    public Response consultarLancamentosPorNome(@QueryParam("nome") String nome) throws Exception {
+        try {
+            return Response.ok(lancamentoBean.consultarLancamentoPorNome(nome)).build();
+        } catch (Exception e) {
+            return Response.ok(e.getMessage()).status(HttpServletResponse.SC_BAD_REQUEST).build();
+        }
     }
 
     /**
@@ -99,8 +115,29 @@ public class LancamentoRest {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("consultarPorTipo")
-    public List<Lancamento> consultarLancamentosPorTipo(@QueryParam("tipo") String tipo) throws Exception {
-        return lancamentoBean.consultarLancamentoPorTipo(tipo);
+    public Response consultarLancamentosPorTipo(@QueryParam("tipo") String tipo) throws Exception {
+        try {
+            return Response.ok(lancamentoBean.consultarLancamentoPorTipo(tipo)).build();
+        } catch (Exception e) {
+            return Response.ok(e.getMessage()).status(HttpServletResponse.SC_BAD_REQUEST).build();
+        }
     }
 
+    /**
+     * Este Metodo Altera dados de lancamentos na base de dados
+     *
+     * @param lancamento Parametro de entrada de dados
+     * @return Retorna mensagem de sucesso ou erro na alteracao de dados
+     * @throws Exception
+     */
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("alterar")
+    public Response AlterarLancamento(Lancamento lancamento) throws Exception {
+        try {
+            return Response.ok(lancamentoBean.alterarLancamento(lancamento)).build();
+        } catch (Exception e) {
+            return Response.ok(e.getMessage()).status(HttpServletResponse.SC_BAD_REQUEST).build();
+        }
+    }
 }

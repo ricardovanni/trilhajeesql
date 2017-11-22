@@ -6,7 +6,7 @@ import br.com.logic.trilhajeesql.EJB.Bean.LancamentoBean;
 import br.com.logic.trilhajeesql.EJB.Interface.LancamentoLocal;
 import br.com.logic.trilhajeesql.Model.Lancamento;
 import br.com.logic.trilhajeesql.Model.TipoLancamentoEnum;
-import br.com.logic.trilhajeesql.UTIL.Util;
+import br.com.logic.trilhajeesql.UTIL.LancamentoUtil;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -31,7 +31,7 @@ public abstract class AbstractStartTest {
     public static JavaArchive createDeployment() {
         JavaArchive ret = ShrinkWrap.create(JavaArchive.class, "trilha.jar");
         ret.addClasses(AbstractStartTest.class, ConexaoDAO.class, Lancamento.class, LancamentoDAO.class, LancamentoLocal.class,
-                TipoLancamentoEnum.class, LancamentoBean.class, Util.class);
+                TipoLancamentoEnum.class, LancamentoBean.class, LancamentoUtil.class);
         ret.addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
         return ret;
     }

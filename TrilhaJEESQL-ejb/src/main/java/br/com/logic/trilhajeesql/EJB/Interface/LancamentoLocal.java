@@ -23,11 +23,7 @@ public interface LancamentoLocal {
 
     void deletarLancamento(Lancamento lancamento) throws Exception;
 
-    void alterarLancamento(Integer id, Lancamento dados) throws Exception;
+    String alterarLancamento(Lancamento dados) throws Exception;
 
     Lancamento retornaObjeto() throws Exception;
-
-    String getConexao() throws Exception;
-
-    Integer getDado(String nome) throws Exception;
 }
