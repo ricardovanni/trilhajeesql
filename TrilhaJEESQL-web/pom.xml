@@ -82,6 +82,7 @@
                 </executions>
             </plugin>
         </plugins>
+        <finalName>trilhajeesql-web</finalName>
     </build>
 
 </project>

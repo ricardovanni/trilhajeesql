@@ -2,11 +2,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-    <artifactId>TrilhaJEESQL</artifactId>
-    <groupId>br.com.logic.trilhajeesql</groupId>
-    <version>1.0</version>
-  </parent>
-
+        <artifactId>TrilhaJEESQL</artifactId>
+        <groupId>br.com.logic.trilhajeesql</groupId>
+        <version>1.0</version>
+    </parent>
     <groupId>br.com.logic.trilhajeesql</groupId>
     <artifactId>TrilhaJEESQL-ear</artifactId>
     <version>1.0</version>
@@ -34,11 +33,25 @@
                 <artifactId>maven-ear-plugin</artifactId>
                 <version>2.8</version>
                 <configuration>
+                    <modules>
+                        <webModule>
+                            <groupId>br.com.logic.trilhajeesql</groupId>
+                            <artifactId>TrilhaJEESQL-web</artifactId>
+                            <contextRoot>/trilhalogic</contextRoot>
+                            <bundleFileName>trilhajeesql-web.war</bundleFileName>
+                        </webModule>
+                        <ejbModule>
+                            <groupId>br.com.logic.trilhajeesql</groupId>
+                            <artifactId>TrilhaJEESQL-ejb</artifactId>
+                            <bundleFileName>trilhajeesql-ejb.jar</bundleFileName>
+                        </ejbModule>                        
+                    </modules>
                     <version>6</version>
                     <defaultLibBundleDir>lib</defaultLibBundleDir>
                 </configuration>
             </plugin>
         </plugins>
+        <finalName>trilha-jee-sql</finalName>
     </build>
     <dependencies>
         <dependency>

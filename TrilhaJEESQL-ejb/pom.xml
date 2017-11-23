@@ -141,6 +141,7 @@
                 </executions>
             </plugin>
         </plugins>
+        <finalName>trilhajeesql-ejb</finalName>
     </build>
 
 </project>

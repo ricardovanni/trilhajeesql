@@ -23,7 +23,6 @@ public class ApplicationConfig extends Application {
      * necessario, comente no metodo getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(br.com.logic.trilhajeesql.Webservice.LancamentoRest.class);
     }
 
 }
