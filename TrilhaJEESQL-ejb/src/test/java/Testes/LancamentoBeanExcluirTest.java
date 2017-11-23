@@ -61,14 +61,14 @@ public class LancamentoBeanExcluirTest extends AbstractStartTest {
       Assert.assertEquals("Dados Inseridos com sucesso!", retorno);
 
       List<Lancamento> ret = lancamentoBean.consultarLancamentoPorNome("Gabriel Alexandre");
-      Integer idLancamento = ret.get(0).getId();
+      Integer idLancamento = ret.get(0).getId() + 100;
 
       String msgErro = "";
       try {
-            retorno = lancamentoBean.deletarLancamento(idLancamento + 100);
+            retorno = lancamentoBean.deletarLancamento(idLancamento);
       } catch(Exception e) {
           msgErro = e.getMessage();
       }
-          Assert.assertEquals("O Id de numero '" + idLancamento + "' informado nao consta no registro de dados de lancamentos", retorno);
+          Assert.assertEquals("O Id de numero '" + idLancamento + "' informado nao consta no registro de dados de lancamentos", msgErro);
     }
 }
