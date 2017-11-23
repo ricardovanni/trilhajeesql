@@ -21,7 +21,7 @@ public interface LancamentoLocal {
 
     List<Lancamento> consultarLancamentoPorTipo(String tipo) throws Exception;
 
-    String deletarLancamento(String idLancamento) throws Exception;
+    String deletarLancamento(Integer idLancamento) throws Exception;
 
     String alterarLancamento(Lancamento dados) throws Exception;
 

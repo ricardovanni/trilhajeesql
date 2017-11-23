@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import javax.inject.Inject;
 import org.jboss.arquillian.junit.Arquillian;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -14,7 +15,7 @@ import org.junit.runner.RunWith;
  * @author Ricardo Vanni
  */
 @RunWith(Arquillian.class)
-public class ConexaoTest extends AbstractStartTest{
+public class ConexaoTest extends AbstractStartTest {
 
     @Inject
     ConexaoDAO conexao;

@@ -69,6 +69,6 @@ public class LancamentoBeanExcluirTest extends AbstractStartTest {
       } catch(Exception e) {
           msgErro = e.getMessage();
       }
-          Assert.assertEquals(""O Id de numero '" + idLancamento + "' informado nao consta no registro de dados de lancamentos"", retorno);
+          Assert.assertEquals("O Id de numero '" + idLancamento + "' informado nao consta no registro de dados de lancamentos", retorno);
     }
 }

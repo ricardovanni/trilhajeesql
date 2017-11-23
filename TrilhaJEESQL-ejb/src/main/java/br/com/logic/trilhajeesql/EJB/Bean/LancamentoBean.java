@@ -106,7 +106,7 @@ public class LancamentoBean extends LancamentoUtil implements LancamentoLocal {
     }
 
     @Override
-    public String deletarLancamento(String idLancamento) throws Exception {
+    public String deletarLancamento(Integer idLancamento) throws Exception {
         try {
             List<Lancamento> lista = consultarLancamento();
 

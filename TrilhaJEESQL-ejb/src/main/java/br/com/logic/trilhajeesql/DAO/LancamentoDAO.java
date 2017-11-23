@@ -89,7 +89,7 @@ public class LancamentoDAO implements Serializable {
         }
     }
 
-    public String deletarDados(String idLancamento) throws Exception {
+    public String deletarDados(Integer idLancamento) throws Exception {
         Connection conn = null;
         Statement stmt = null;
 
@@ -107,7 +107,7 @@ public class LancamentoDAO implements Serializable {
             stmt.execute(sql.toString());
             stmt.execute("commit");
 
-            return "Dados de Lancamento de contas excluidos com sucesso!"
+            return "Dados de Lancamento de contas excluidos com sucesso!";
 
         } catch (SQLException e) {
             throw e;
