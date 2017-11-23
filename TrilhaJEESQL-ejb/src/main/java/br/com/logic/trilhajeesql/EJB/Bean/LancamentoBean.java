@@ -106,10 +106,16 @@ public class LancamentoBean extends LancamentoUtil implements LancamentoLocal {
     }
 
     @Override
-    public void deletarLancamento(Lancamento lancamento) throws Exception {
+    public String deletarLancamento(String idLancamento) throws Exception {
         try {
-            lancamentoDAO.deletarDados(lancamento);
+            List<Lancamento> lista = consultarLancamento();
 
+            for(Lancamento lancamento : lista){
+                if(lancamento.getId().equals(idLancamento)){
+                    return lancamentoDAO.deletarDados(idLancamento);
+                }
+            }
+            throw new Exception("O Id de numero '" + idLancamento + "' informado nao consta no registro de dados de lancamentos");
         } catch (Exception e) {
             throw e;
         }

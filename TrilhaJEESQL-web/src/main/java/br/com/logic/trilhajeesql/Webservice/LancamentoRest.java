@@ -38,6 +38,7 @@ public class LancamentoRest {
      * @throws Exception
      */
     @POST
+    @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("inserir")
     public Response inserirLancamento(Lancamento lancamento) throws Exception {
@@ -130,12 +131,29 @@ public class LancamentoRest {
      * @return Retorna mensagem de sucesso ou erro na alteracao de dados
      * @throws Exception
      */
-    @POST
+    @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("alterar")
     public Response AlterarLancamento(Lancamento lancamento) throws Exception {
         try {
             return Response.ok(lancamentoBean.alterarLancamento(lancamento)).build();
+        } catch (Exception e) {
+            return Response.ok(e.getMessage()).status(HttpServletResponse.SC_BAD_REQUEST).build();
+        }
+    }
+
+    /**
+     * Este Metodo Exclui dados de lancamentos na base de dados
+     *
+     * @param idLancamento Parametro de entrada de dados
+     * @return Retorna mensagem de sucesso ou erro na alteracao de dados
+     * @throws Exception
+     */
+    @DELETE
+    @Path("excluir")
+    public Response AlterarLancamento(Integer idLancamento) throws Exception {
+        try {
+            return Response.ok(lancamentoBean.deletarLancamento(idLancamento)).build();
         } catch (Exception e) {
             return Response.ok(e.getMessage()).status(HttpServletResponse.SC_BAD_REQUEST).build();
         }

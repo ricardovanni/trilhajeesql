@@ -89,7 +89,7 @@ public class LancamentoDAO implements Serializable {
         }
     }
 
-    public void deletarDados(Lancamento lancamento) throws Exception {
+    public String deletarDados(String idLancamento) throws Exception {
         Connection conn = null;
         Statement stmt = null;
 
@@ -102,10 +102,12 @@ public class LancamentoDAO implements Serializable {
 
             StringBuilder sql = new StringBuilder();
             sql.append("\n DELETE FROM lancamento ");
-            sql.append("\n WHERE  id = ").append(lancamento.getId());
+            sql.append("\n WHERE  id = ").append(idLancamento);
 
             stmt.execute(sql.toString());
             stmt.execute("commit");
+
+            return "Dados de Lancamento de contas excluidos com sucesso!"
 
         } catch (SQLException e) {
             throw e;
