@@ -8,7 +8,6 @@ import java.util.List;
 import javax.inject.Inject;
 import org.jboss.arquillian.junit.Arquillian;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -25,7 +24,7 @@ public class LancamentoBeanInserirTest extends AbstractStartTest {
     private ConexaoDAO conexao;
 
     @Test
-    public void testInserirLancamentoSucesso() throws Exception {
+    public void testInserirLancamentoInserirSucesso() throws Exception {
 
         Lancamento lcto = new Lancamento();
         lcto.setNome("Gabriel Alexandre");
@@ -58,7 +57,7 @@ public class LancamentoBeanInserirTest extends AbstractStartTest {
     }
 
     @Test
-    public void testInserirLancamentoErroNome() throws Exception {
+    public void testInserirLancamentoInserirErroNome() throws Exception {
         Lancamento lcto = new Lancamento();
         lcto.setNome("RIcArDO Vanni");
         lcto.setData("16/11/2017");
@@ -76,7 +75,7 @@ public class LancamentoBeanInserirTest extends AbstractStartTest {
     }
 
     @Test
-    public void testInserirLancamentoErroData() throws Exception {
+    public void testInserirLancamentoInserirErroData() throws Exception {
         Lancamento lcto = new Lancamento();
         lcto.setNome("Ricardo Vanni");
         lcto.setData("11/25/2017");
@@ -94,7 +93,7 @@ public class LancamentoBeanInserirTest extends AbstractStartTest {
     }
 
     @Test
-    public void testInserirLancamentoErroValor() throws Exception {
+    public void testInserirLancamentoInserirErroValor() throws Exception {
         Lancamento lcto = new Lancamento();
         lcto.setNome("Ricardo Vanni");
         lcto.setData("11/10/2017");
@@ -112,7 +111,7 @@ public class LancamentoBeanInserirTest extends AbstractStartTest {
     }
 
     @Test
-    public void testInserirLancamentoErroTipo() throws Exception {
+    public void testInserirLancamentoInserirErroTipo() throws Exception {
         Lancamento lcto = new Lancamento();
         lcto.setNome("Ricardo Vanni");
         lcto.setData("11/12/2017");

@@ -3,4 +3,5 @@
 target/
 /TrilhaJEESQL-ejb/nbproject/
 TrilhaJEESQL-ejb/src/test/resources/lancamento/lancamento.lck
+*.txt~
 

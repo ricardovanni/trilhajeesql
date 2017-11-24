@@ -26,9 +26,9 @@ Este portal terá toda a documentação padrão de **Eng. de Software** dos proj
 
 ## Documentação Técnica
 
-| Documento                                                                                       | Descrição                                      |
-|-------------------------------------------------------------------------------------------------|------------------------------------------------|
-| [How-To Técnico](How-To-Tecnico/How-To-Tecnico.md)                                              | Páginas com procedimentos técnicos específicos |
+| Documento                                          | Descrição                                      |
+|----------------------------------------------------|------------------------------------------------|
+| [How-To Técnico](How-To-Tecnico/How-To-Tecnico.md) | Páginas com procedimentos técnicos específicos |
 
 
 _[Sobre o Portal de Documentação](About/About.md)_
