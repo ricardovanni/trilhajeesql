@@ -54,6 +54,11 @@ public class LancamentoBean extends LancamentoUtil implements LancamentoLocal {
     }
 
     @Override
+    public List<Lancamento> consultarJPA() throws Exception {
+        return lancamentoDAO.consulta();
+    }
+
+    @Override
     public List<Lancamento> consultarLancamentoPorData(String data) throws Exception {
         try {
             validarData(data);
@@ -110,8 +115,8 @@ public class LancamentoBean extends LancamentoUtil implements LancamentoLocal {
         try {
             List<Lancamento> lista = consultarLancamento();
 
-            for(Lancamento lancamento : lista){
-                if(lancamento.getId().equals(idLancamento)){
+            for (Lancamento lancamento : lista) {
+                if (lancamento.getId().equals(idLancamento)) {
                     return lancamentoDAO.deletarDados(idLancamento);
                 }
             }

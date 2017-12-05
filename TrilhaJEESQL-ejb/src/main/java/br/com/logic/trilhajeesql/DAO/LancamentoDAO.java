@@ -12,6 +12,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  *
@@ -22,6 +24,9 @@ public class LancamentoDAO implements Serializable {
 
     @Inject
     private ConexaoDAO connection;
+
+    @PersistenceContext
+    private EntityManager manager;
 
     public String inserirDados(Lancamento dados) throws Exception {
         Connection conn = null;
@@ -169,5 +174,9 @@ public class LancamentoDAO implements Serializable {
             Logger.getLogger(LancamentoDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return conexao;
+    }
+
+    public List<Lancamento> consulta() {
+        return manager.createQuery("FROM Lancamento", Lancamento.class).getResultList();
     }
 }

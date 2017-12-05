@@ -160,4 +160,22 @@ public class LancamentoRest {
             return Response.ok(e.getMessage()).status(HttpServletResponse.SC_BAD_REQUEST).build();
         }
     }
+
+    /**
+     * Este Metodo retorna a consulta de todos os lancamentos cadastrados na
+     * base de dados
+     *
+     * @return Retorna uma lista de lancamentos
+     * @throws Exception
+     */
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("consultaJPA")
+    public Response consultaJPA() throws Exception {
+        try {
+            return Response.ok(lancamentoBean.consultarJPA()).build();
+        } catch (Exception e) {
+            return Response.ok(e.getMessage()).status(HttpServletResponse.SC_BAD_REQUEST).build();
+        }
+    }
 }

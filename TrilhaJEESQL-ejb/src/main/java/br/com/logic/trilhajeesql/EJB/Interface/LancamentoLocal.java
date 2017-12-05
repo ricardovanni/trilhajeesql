@@ -15,6 +15,8 @@ public interface LancamentoLocal {
 
     List<Lancamento> consultarLancamento() throws Exception;
 
+    List<Lancamento> consultarJPA() throws Exception;
+
     List<Lancamento> consultarLancamentoPorData(String data) throws Exception;
 
     List<Lancamento> consultarLancamentoPorNome(String nome) throws Exception;

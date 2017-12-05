@@ -2,13 +2,19 @@ package br.com.logic.trilhajeesql.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 /**
  *
  * @author Ricardo Vanni
  */
+@Entity
 public class Lancamento implements Serializable {
 
+    @Id
+    @GeneratedValue
     private Integer id = 0;
 
     private String nome = "";
